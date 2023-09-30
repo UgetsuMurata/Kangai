@@ -48,9 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/raleway_medium"
-        android:text="Create your Account"
+        android:text="CREATE YOUR ACCOUNT"
         android:textColor="?text"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -62,10 +62,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:hintTextColor="@color/your_background_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:hint="Username"
         android:textColor="?text"
@@ -83,6 +85,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:hintTextColor="@color/your_background_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -104,6 +108,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirmPassfield"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:hintTextColor="@color/your_background_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -124,6 +130,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phoneNumberField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:hintTextColor="@color/your_background_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -149,11 +157,12 @@
         android:id="@+id/sigUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#31B54C"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:text="Sign Up"
-        android:backgroundTint="#31B54C"
         app:layout_constraintEnd_toEndOf="@+id/phoneNumberField"
         app:layout_constraintStart_toStartOf="@+id/phoneNumberField"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumberField" />
@@ -162,26 +171,32 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/raleway_regular"
         android:text="Already have an Account?"
         android:textColor="?text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/sigUpButton"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="@+id/sigUpButton"
-        app:layout_constraintTop_toBottomOf="@+id/sigUpButton" />
+        app:layout_constraintTop_toBottomOf="@+id/sigUpButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="3dp"
         android:fontFamily="@font/raleway_regular"
         android:text="Login"
-        android:textColor="?text"
-        app:layout_constraintEnd_toEndOf="@+id/sigUpButton"
-        app:layout_constraintStart_toStartOf="@+id/text1"
-        app:layout_constraintTop_toBottomOf="@+id/sigUpButton" />
+        android:textColor="#31B54C"
+        app:layout_constraintBottom_toBottomOf="@+id/text1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintStart_toEndOf="@+id/text1"
+        app:layout_constraintTop_toTopOf="@+id/text1"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
