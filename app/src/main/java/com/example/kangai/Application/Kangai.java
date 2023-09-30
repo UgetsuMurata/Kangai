@@ -2,6 +2,9 @@ package com.example.kangai.Application;
 
 import android.app.Application;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Kangai extends Application {
 
     public static Kangai instance;
@@ -10,6 +13,9 @@ public class Kangai extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     public static Kangai getInstance() {

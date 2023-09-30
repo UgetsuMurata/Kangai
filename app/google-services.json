@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "553207240559",
+    "project_id": "kangai-2307b",
+    "storage_bucket": "kangai-2307b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:553207240559:android:b3ac4f6832353c2848ba9a",
+        "android_client_info": {
+          "package_name": "com.example.kangai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Pj7Vof7gwIoXH2no2YGKKqCydCOrvXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
