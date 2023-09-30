@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".Application.Kangai"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,25 +13,25 @@
         android:theme="@style/Theme.Kangai"
         tools:targetApi="31">
         <activity
-            android:name=".Settings"
+            android:name=".Settings.Settings"
             android:exported="false" />
         <activity
-            android:name=".AddDevice"
+            android:name=".Dashboard.AddDevice"
             android:exported="false" />
         <activity
-            android:name=".ViewPlants"
+            android:name=".Dashboard.ViewPlants"
             android:exported="false" />
         <activity
-            android:name=".Dashboard"
+            android:name=".Dashboard.Dashboard"
             android:exported="false" />
         <activity
-            android:name=".EditAccount"
+            android:name=".Accounts.EditAccount"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".Accounts.SignUp"
             android:exported="false" />
         <activity
-            android:name=".SignIn"
+            android:name=".Accounts.SignIn"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
