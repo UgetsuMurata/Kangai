@@ -4,7 +4,7 @@ import android.app.Application;
 
 public class Kangai extends Application {
 
-    Kangai instance;
+    public static Kangai instance;
 
     @Override
     public void onCreate() {
@@ -12,9 +12,18 @@ public class Kangai extends Application {
         instance = this;
     }
 
+    public static Kangai getInstance() {
+        return instance;
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
 
+    }
+
+    public Boolean isDeviceExisting(String deviceID){
+        // Check in database.
+        return true;
     }
 }

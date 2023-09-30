@@ -23,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".Dashboard.AddDevice"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Dashboard.ViewPlants"
             android:exported="true" />
