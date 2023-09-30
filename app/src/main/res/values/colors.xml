@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="textLight">#333</color>
+    <color name="textDark">#FFF</color>
+    <color name="errorLight">#FF0000</color>
+    <color name="errorDark">#FF3333</color>
+    <color name="greyBGLight">#D9D9D9</color>
+    <color name="greyBGDark">#555</color>
+    <color name="confirmLight">#2E7D32</color>
+    <color name="confirmDark">#AAE057</color>
+
 </resources>

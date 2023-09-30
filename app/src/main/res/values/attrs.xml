@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="text" format="reference"/>
+    <attr name="error" format="reference"/>
+    <attr name="greyBG" format="reference"/>
+    <attr name="confirm" format="reference"/>
+</resources>

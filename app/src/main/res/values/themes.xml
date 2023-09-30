@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="text">@color/textLight</item>
+        <item name="error">@color/errorLight</item>
+        <item name="greyBG">@color/greyBGLight</item>
+        <item name="confirm">@color/confirmLight</item>
     </style>
 </resources>
