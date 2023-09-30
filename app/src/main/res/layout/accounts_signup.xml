@@ -10,7 +10,7 @@
         android:id="@+id/icon"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/kangai_colored"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -24,9 +24,9 @@
         android:layout_marginTop="3dp"
         android:fontFamily="@font/raleway_medium"
         android:text="KANGAI"
+        android:textColor="?text"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="?text"
         app:layout_constraintEnd_toEndOf="@+id/icon"
         app:layout_constraintStart_toStartOf="@+id/icon"
         app:layout_constraintTop_toBottomOf="@+id/icon" />
@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway_regular"
         android:text="By: Team Koinu"
-        android:textSize="10sp"
         android:textColor="?text"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="@+id/irrigTitle"
         app:layout_constraintStart_toStartOf="@+id/irrigTitle"
         app:layout_constraintTop_toBottomOf="@+id/irrigTitle" />
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/raleway_medium"
         android:text="Create your Account"
         android:textColor="?text"
@@ -67,17 +67,17 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
-        app:startIconDrawable="@drawable/ic_username"
+        android:hint="Username"
         android:textColor="?text"
         app:endIconMode="clear_text"
-        android:hint="Username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount">
+        app:layout_constraintTop_toBottomOf="@+id/createAccount"
+        app:startIconDrawable="@drawable/ic_username">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -87,8 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:hint="Password"
-        app:endIconMode="password_toggle"
         android:textColor="?text"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="@+id/usernameField"
         app:layout_constraintStart_toStartOf="@+id/usernameField"
         app:layout_constraintTop_toBottomOf="@+id/usernameField"
@@ -97,10 +97,91 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPassfield"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="Confirm Password"
+        android:textColor="?text"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/passwordField"
+        app:layout_constraintStart_toStartOf="@+id/passwordField"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField"
+        app:startIconDrawable="@drawable/ic_lock">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneNumberField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="Phone Number"
+        android:textColor="?text"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="@+id/confirmPassfield"
+        app:layout_constraintStart_toStartOf="@+id/confirmPassfield"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPassfield"
+        app:prefixText="+63"
+        app:startIconDrawable="@drawable/ic_phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="10" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/sigUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="Sign Up"
+        android:backgroundTint="#31B54C"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumberField"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumberField"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberField" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/raleway_regular"
+        android:text="Already have an Account?"
+        android:textColor="?text"
+        app:layout_constraintEnd_toEndOf="@+id/sigUpButton"
+        app:layout_constraintStart_toStartOf="@+id/sigUpButton"
+        app:layout_constraintTop_toBottomOf="@+id/sigUpButton" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/raleway_regular"
+        android:text="Login"
+        android:textColor="?text"
+        app:layout_constraintEnd_toEndOf="@+id/sigUpButton"
+        app:layout_constraintStart_toStartOf="@+id/text1"
+        app:layout_constraintTop_toBottomOf="@+id/sigUpButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

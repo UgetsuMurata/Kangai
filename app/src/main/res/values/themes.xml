@@ -19,4 +19,11 @@
         <item name="confirm">@color/confirmLight</item>
         <item name="background">@color/backgroundLight</item>
     </style>
+
+    <style name="MyTextInputLayoutStyle" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@color/your_background_color</item>
+
+    </style>
+
+
 </resources>
