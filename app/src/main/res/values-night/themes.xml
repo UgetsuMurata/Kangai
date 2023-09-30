@@ -17,5 +17,6 @@
         <item name="error">@color/errorDark</item>
         <item name="greyBG">@color/greyBGDark</item>
         <item name="confirm">@color/confirmDark</item>
+        <item name="background">@color/backgroundDark</item>
     </style>
 </resources>
