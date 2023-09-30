@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Kangai</string>
+    <string name="app_name_jp">灌漑</string>
+
+    <!--tagline choices-->
+    <string name="tagline1">Nurturing Your Crops, Digitally</string>
+    <string name="tagline2">Cultivating Efficiency, One Drop at a Time</string>
+    <string name="tagline3">Precision Farming, Perfect Results</string>
+    <string name="leafloading">leafLoading</string>
 </resources>

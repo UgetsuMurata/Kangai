@@ -5,21 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/kangai_colored"/>
-    <TextView
+    android:orientation="vertical"
+    android:background="?background">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kangai"
-        android:fontFamily="@font/raleway_regular"
-        android:textSize="40dp"
-        android:textAlignment="center"/>
-
-
-
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="50dp"
+            app:srcCompat="@drawable/kangai_colored"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:fontFamily="@font/raleway_regular"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name_jp"
+            android:fontFamily="@font/noto_serif_jp"
+            android:textSize="30dp"
+            android:layout_marginTop="-20dp"
+            android:textAlignment="center"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tagline1"
+            android:fontFamily="@font/raleway_thin"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textColor="?text"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/loading_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Getting Ready 10%"
+            android:fontFamily="@font/raleway_medium"
+            android:layout_marginBottom="10dp"/>
+        <com.example.kangai.CustomViews.LeafLoadingBar
+            android:id="@+id/loading_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"/>
+    </LinearLayout>
 </LinearLayout>

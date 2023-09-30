@@ -17,5 +17,6 @@
     <color name="greyBGDark">#555</color>
     <color name="confirmLight">#2E7D32</color>
     <color name="confirmDark">#AAE057</color>
+    <color name="header">#CFFFAA</color>
 
 </resources>
