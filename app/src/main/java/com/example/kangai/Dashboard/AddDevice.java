@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,12 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.ColorHelpers.ThemedColor;
+import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.R;
+import com.google.firebase.database.DataSnapshot;
 import com.google.zxing.Result;
+
+import java.util.Objects;
 
 public class AddDevice extends AppCompatActivity {
 
@@ -62,13 +67,21 @@ public class AddDevice extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Boolean exists = kangai.isDeviceExisting(result.getText());
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        runOnUiThread(new Runnable() {
+                        FirebaseData fd = new FirebaseData();
+                        fd.retrieveData(AddDevice.this, "Devices/", new FirebaseData.FirebaseDataCallback() {
                             @Override
-                            public void run() {
+                            public void onDataReceived(DataSnapshot dataSnapshot) {
+                                boolean exists = false;
+                                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                    String childKey = childSnapshot.getKey();
+                                    if (Objects.equals(childKey, result.toString())) {
+                                        exists = true;
+                                        break;
+                                    }
+                                }
+                                Handler handler = new Handler();
                                 if (exists){
-                                    scannerLabel.setText("Valid Scan: Device Added");
+                                    scannerLabel.setText("Valid Scan: Device Added!");
                                     scannerLabel.setTextColor(ThemedColor.getColorStateList(AddDevice.this, R.attr.confirm));
 
                                     handler.postDelayed(() -> onBackPressed(), 3000);
