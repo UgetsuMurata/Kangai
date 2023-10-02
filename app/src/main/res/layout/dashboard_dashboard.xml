@@ -8,6 +8,46 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
     <!--TODO: Header-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CFFFAA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/logo_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/kangai_colored"/>
+
+            <TextView
+                android:id="@+id/logo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_medium"
+                android:text="Kangai"
+                android:textColor="?text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginStart="3dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +84,7 @@
                     android:textAlignment="center"
                     android:fontFamily="@font/raleway_regular"
                     android:textSize="14sp"
-                    android:textColor="@color/textLight"/>/>
+                    android:textColor="@color/textLight"/>
                 <TextView
                     android:id="@+id/reservoir"
                     android:layout_width="wrap_content"
@@ -54,9 +94,10 @@
                     android:textAlignment="center"
                     android:fontFamily="@font/raleway_medium"
                     android:textSize="14sp"
-                    android:textColor="@color/textLight"/>/>
+                    android:textColor="@color/textLight"/>
             </LinearLayout>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
     <TextView
         android:layout_width="match_parent"
@@ -67,7 +108,7 @@
         android:textColor="?text"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textSize="14dp"/>
+        android:textSize="14sp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/devices"
         android:layout_width="match_parent"
@@ -81,7 +122,7 @@
         android:textColor="?text"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textSize="14dp"/>
+        android:textSize="14sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
