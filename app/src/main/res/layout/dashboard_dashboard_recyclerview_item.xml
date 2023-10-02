@@ -25,6 +25,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textColor="?text"
+            android:textSize="10sp"
             android:fontFamily="@font/raleway_medium"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
