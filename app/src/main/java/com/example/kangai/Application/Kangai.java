@@ -5,11 +5,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Objects.Device;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,6 +21,7 @@ public class Kangai extends Application {
     public static Kangai instance;
 
     private FirebaseData fd;
+    private List<Device> devices;
 
     @Override
     public void onCreate() {
@@ -29,6 +32,7 @@ public class Kangai extends Application {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         fd = new FirebaseData();
+        devices = new ArrayList<>();
     }
 
     public static Kangai getInstance() {
@@ -41,27 +45,16 @@ public class Kangai extends Application {
 
     }
 
-    public Boolean isDeviceExisting(Context context, String deviceID) throws InterruptedException {
-        // Check in database.
-
-        CountDownLatch latch = new CountDownLatch(1);
-        final AtomicBoolean deviceKey = new AtomicBoolean(false);
-
-        fd.retrieveData(context, "Devices/", new FirebaseData.FirebaseDataCallback() {
-            @Override
-            public void onDataReceived(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    String childKey = childSnapshot.getKey();
-                    if (childKey != null && childKey.equals(deviceID)) {
-                        deviceKey.set(true);
-                        break;
-                    }
-                }
-                latch.countDown();
-            }
-        });
-
-        latch.await();
-        return deviceKey.get();
+    public List<Device> getDevices(){
+        return devices;
     }
+
+    public void setDevices(List<Device> devices){
+        this.devices = devices;
+    }
+
+    public void addDevice(Device device){
+        this.devices.add(device);
+    }
+
 }

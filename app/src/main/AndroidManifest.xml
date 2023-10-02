@@ -29,7 +29,7 @@
             android:exported="true" />
         <activity
             android:name=".Dashboard.Dashboard"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Accounts.EditAccount"
             android:exported="true" />
