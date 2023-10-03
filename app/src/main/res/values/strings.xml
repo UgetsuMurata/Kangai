@@ -7,4 +7,7 @@
     <string name="tagline2">Cultivating Efficiency, One Drop at a Time</string>
     <string name="tagline3">Precision Farming, Perfect Results</string>
     <string name="leafloading">leafLoading</string>
+
+
+    <string name="delete_account"><u>Delete Account?</u></string>
 </resources>

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Accounts.EditAccount">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -39,15 +38,172 @@
                 android:textStyle="bold"
                 android:layout_marginStart="3dp"
                 android:layout_gravity="center"/>
-
         </LinearLayout>
-        
-        
+
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_account_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/changeProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="3dp"
+            android:text="Change Profile Photo"
+            android:textColor="?text" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Username"
+        android:textColor="?text"
+        app:boxBackgroundColor="@null"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/your_background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeProfile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Password"
+        android:textColor="?text"
+        app:boxBackgroundColor="@null"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/your_background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneNumberField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Phone Number"
+        android:textColor="?text"
+        app:boxBackgroundColor="@null"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeColor="@color/text_input_layout_stroke_color"
+        app:prefixText="+63"
+        app:endIconMode="clear_text"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:hintTextColor="@color/your_background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:inputType="number"
+            android:maxLength="10"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/DeleteAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/raleway_medium"
+        android:text="@string/delete_account"
+        android:textColor="#FF0202"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumberField"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumberField"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberField" />
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:backgroundTint="@android:color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/button2"
+        app:layout_constraintEnd_toStartOf="@id/button2"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumberField"
+        app:layout_constraintTop_toBottomOf="@+id/DeleteAccount"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="#31B54C"
+        android:text="Save"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:backgroundTint="@android:color/transparent"
+        app:cornerRadius="8dp"
+
+        app:layout_constraintBottom_toBottomOf="@id/button"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumberField"
+        app:layout_constraintStart_toEndOf="@id/button"
+        app:layout_constraintTop_toBottomOf="@+id/DeleteAccount"
+        app:layout_constraintVertical_bias="0.916" />
 
 
 
