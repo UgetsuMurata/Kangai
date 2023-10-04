@@ -3,7 +3,6 @@ package com.example.kangai.CustomViews;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.example.kangai.ColorHelpers.ThemedColor;
+import com.example.kangai.Helpers.ThemedColor;
 import com.example.kangai.R;
 
 import java.util.ArrayList;

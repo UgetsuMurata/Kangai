@@ -1,4 +1,4 @@
-package com.example.kangai.ColorHelpers;
+package com.example.kangai.Helpers;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

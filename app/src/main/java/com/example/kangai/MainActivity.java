@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Helpers.TimeHelper;
 import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
+import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
 import com.google.firebase.database.DataSnapshot;
 
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         //GET ACCT
         String usernameID = kangai.userID;
         BooleanReference lock = new BooleanReference(false);
+        BooleanReference lock2 = new BooleanReference(false);
         //GET DEVICES
         lock.lock();
         fd.retrieveData(this, "Users/"+usernameID+"/Devices", new FirebaseData.FirebaseDataCallback() {
@@ -140,8 +144,20 @@ public class MainActivity extends AppCompatActivity {
                 lock.unlock();
             }
         });
-
-        while (System.currentTimeMillis()-timeStarted<1000 && lock.isLocked());
+        lock2.lock();
+        fd.retrieveData(this, "Users/"+usernameID+"/Settings/Logs/", new FirebaseData.FirebaseDataCallback() {
+            @Override
+            public void onDataReceived(DataSnapshot dataSnapshot) {
+                for (DataSnapshot logDS : dataSnapshot.getChildren()) {
+                    String timestamp = logDS.getKey();
+                    String log = String.valueOf(logDS.getValue()!=null?logDS.getValue():"");
+                    kangai.addLogs(new Logs(TimeHelper.millisToReadable(
+                            Long.valueOf(timestamp!=null?timestamp:"0")), log));
+                }
+                lock2.unlock();
+            }
+        });
+        while (System.currentTimeMillis()-timeStarted<1000 && lock.isLocked() && lock2.isLocked());
     }
     private void Process2(){
         long timeStarted = System.currentTimeMillis();

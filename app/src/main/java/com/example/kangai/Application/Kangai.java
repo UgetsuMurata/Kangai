@@ -5,8 +5,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Helpers.TimeHelper;
 import com.example.kangai.MainActivity;
 import com.example.kangai.Objects.Device;
+import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +27,7 @@ public class Kangai extends Application {
 
     private FirebaseData fd;
     private List<Device> devices;
+    private List<Logs> logs;
     public String userID;
 
     @Override
@@ -38,6 +41,7 @@ public class Kangai extends Application {
 
         fd = new FirebaseData();
         devices = new ArrayList<>();
+        logs = new ArrayList<>();
     }
 
     public static Kangai getInstance() {
@@ -53,15 +57,16 @@ public class Kangai extends Application {
     public List<Device> getDevices(){
         return devices;
     }
+    public List<Logs> getLogs(){
+        return logs;
+    }
 
     public void setDevices(List<Device> devices){
         this.devices = devices;
     }
-
     public void addDevice(Device device){
         this.devices.add(device);
     }
-
     public void getAllDevice(Context context){
         if (devices != null) devices.clear();
         else devices = new ArrayList<>();
@@ -177,4 +182,27 @@ public class Kangai extends Application {
             }
         });
     }
+
+    public void setLogs(List<Logs> logs) {
+        this.logs = logs;
+    }
+    public void addLogs(Logs logs){
+        this.logs.add(logs);
+    }
+    public void getAllLogs(){
+        if (logs != null) logs.clear();
+        else logs = new ArrayList<>();
+        fd.retrieveData(this, "Users/"+userID+"/Settings/Logs/", new FirebaseData.FirebaseDataCallback() {
+            @Override
+            public void onDataReceived(DataSnapshot dataSnapshot) {
+                for (DataSnapshot logDS : dataSnapshot.getChildren()) {
+                    String timestamp = logDS.getKey();
+                    String log = String.valueOf(logDS.getValue()!=null?logDS.getValue():"");
+                    logs.add(new Logs(TimeHelper.millisToReadable(
+                            Long.valueOf(timestamp!=null?timestamp:"0")), log));
+                }
+            }
+        });
+    }
+
 }

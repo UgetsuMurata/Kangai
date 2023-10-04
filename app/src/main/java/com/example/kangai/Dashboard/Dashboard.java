@@ -14,16 +14,19 @@ import android.view.Menu;
 
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Adapter.DevicesAdapter;
+import com.example.kangai.Dashboard.Adapter.LogsAdapter;
 import com.example.kangai.Objects.Device;
+import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
 
     TextView reservoir;
-    RecyclerView devices;
+    RecyclerView devices, logs;
     CardView noDevices;
     Kangai kangai;
 
@@ -44,6 +47,7 @@ public class Dashboard extends AppCompatActivity {
 
         reservoir = findViewById(R.id.reservoir);
         devices = findViewById(R.id.devices);
+        logs = findViewById(R.id.logs);
         noDevices = findViewById(R.id.no_devices);
 
         kangai = Kangai.getInstance();
@@ -56,6 +60,7 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(Dashboard.this, AddDevice.class));
             }
         });
+        List<Logs> logsList = kangai.getLogs();
     }
 
     @Override
@@ -78,6 +83,9 @@ public class Dashboard extends AppCompatActivity {
     private void setUpRecyclerView(){
         devices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         devices.setAdapter(new DevicesAdapter(this, new ArrayList<>(kangai.getDevices())));
+        logs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        Collections.reverse(kangai.getLogs());
+        logs.setAdapter(new LogsAdapter(new ArrayList<>(kangai.getLogs())));
     }
 
 }

@@ -11,9 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +18,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.kangai.Application.Kangai;
-import com.example.kangai.ColorHelpers.ThemedColor;
+import com.example.kangai.Helpers.ThemedColor;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.R;
 import com.google.firebase.database.DataSnapshot;
