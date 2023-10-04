@@ -1,5 +1,7 @@
 package com.example.kangai.Objects;
 
+import androidx.annotation.NonNull;
+
 public class Plants {
     Integer slotNumber;
     String name, status, value, lastWatered;
@@ -45,7 +47,7 @@ public class Plants {
     }
 
     public String getLastWatered() {
-        return lastWatered;
+        return "Last Watered: "+lastWatered;
     }
 
     public void setLastWatered(String lastWatered) {

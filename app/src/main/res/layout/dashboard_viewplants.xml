@@ -8,9 +8,9 @@
     android:background="?background"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/device_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Device 1"
         android:fontFamily="@font/roboto_bold"
         android:textSize="14sp"
         android:textColor="?text"
@@ -19,251 +19,382 @@
         android:layout_marginBottom="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:weightSum="2"
-        android:layout_weight="1">
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/greenBG"
-            app:cardCornerRadius="25dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="5dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/leaf"/>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/statusSlot1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:cardCornerRadius="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-                <ImageView
-                    android:id="@+id/waterSlot1"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/statusSlot1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/waterdrop"
-                    app:tint="@color/blueWater" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Slot1"
-                    android:textSize="14sp"
-                    android:textColor="?text"
-                    android:fontFamily="@font/roboto_bold" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/edit"
-                    android:layout_marginStart="20dp"/>
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/greenBG"
-            app:cardCornerRadius="25dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="5dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/leaf"/>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/statusSlot2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:cardCornerRadius="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-                <ImageView
-                    android:id="@+id/waterSlot2"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/statusSlot2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/waterdrop"
-                    app:tint="@color/blueWater" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Slot2"
-                        android:textSize="14sp"
-                        android:textColor="?text"
-                        android:fontFamily="@font/roboto_bold" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/edit"
-                        android:layout_marginStart="20dp"/>
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="50dp"
-        android:weightSum="2"
-        android:layout_weight="1">
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/greenBG"
-            app:cardCornerRadius="25dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="5dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:layout_marginHorizontal="30dp"
+        android:weightSum="4"
+        android:showDividers="middle"
+        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/leaf"/>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/statusSlot3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:cardCornerRadius="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <ImageView
-                android:id="@+id/waterSlot3"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@id/statusSlot3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/waterdrop"
-                app:tint="@color/blueWater" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="25dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="?text"
+            android:backgroundTint="@color/greenBG">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:gravity="center">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/slot1_edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/edit"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Slot3"
-                    android:textSize="14sp"
-                    android:textColor="?text"
-                    android:fontFamily="@font/roboto_bold" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/edit"
-                    android:layout_marginStart="20dp"/>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/greenBG"
-            app:cardCornerRadius="25dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="5dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
+                    android:id="@+id/slot1_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/leaf"/>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/statusSlot4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:cardCornerRadius="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-                <ImageView
-                    android:id="@+id/waterSlot4"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/statusSlot4"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/waterdrop"
-                    app:tint="@color/blueWater" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Slot1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/slot1_last_watered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="center"
+                    android:text="Last Watered: 10:15PM"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+                <EditText
+                    android:id="@+id/slot1_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:hint="Slot1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center">
-
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Status"
+                        android:gravity="center"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot1_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginStart="5dp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot1_water"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Slot4"
-                        android:textSize="14sp"
-                        android:textColor="?text"
-                        android:fontFamily="@font/roboto_bold" />
-                    <ImageView
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/confirmDark"
+                        android:layout_marginStart="40dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Water Now"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
+                            android:layout_margin="5dp"
+                            android:textSize="10sp"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="25dp"
+            android:layout_marginTop="10dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="?text"
+            android:backgroundTint="@color/greenBG">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/slot2_edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/edit"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/slot2_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Slot2"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/slot2_last_watered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="center"
+                    android:text="Last Watered: 10:15PM"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+                <EditText
+                    android:id="@+id/slot2_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:hint="Slot1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/edit"
-                        android:layout_marginStart="20dp"/>
+                        android:text="Status"
+                        android:gravity="center"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot2_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginStart="5dp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot2_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/confirmDark"
+                        android:layout_marginStart="40dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Water Now"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
+                            android:layout_margin="5dp"
+                            android:textSize="10sp"/>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="25dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="?text"
+            android:backgroundTint="@color/greenBG">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/slot3_edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/edit"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/slot3_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Slot3"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/slot3_last_watered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="center"
+                    android:text="Last Watered: 10:15PM"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <EditText
+                    android:id="@+id/slot3_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:hint="Slot1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Status"
+                        android:gravity="center"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot3_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginStart="5dp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot3_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/confirmDark"
+                        android:layout_marginStart="40dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Water Now"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
+                            android:layout_margin="5dp"
+                            android:textSize="10sp"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="25dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="?text"
+            android:backgroundTint="@color/greenBG">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/slot4_edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/edit"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/slot4_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Slot4"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/slot4_last_watered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="center"
+                    android:text="Last Watered: 10:15PM"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+                <EditText
+                    android:id="@+id/slot4_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:hint="Slot1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Status"
+                        android:gravity="center"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot4_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginStart="5dp"/>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/slot4_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/confirmDark"
+                        android:layout_marginStart="40dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Water Now"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
+                            android:layout_margin="5dp"
+                            android:textSize="10sp"/>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+
 </LinearLayout>

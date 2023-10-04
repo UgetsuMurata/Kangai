@@ -1,5 +1,7 @@
 package com.example.kangai.Objects;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Device {
@@ -63,4 +65,5 @@ public class Device {
     public void setLastUpdate(Long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
 }

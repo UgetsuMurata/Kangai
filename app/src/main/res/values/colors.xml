@@ -24,5 +24,8 @@
     <color name="greenBG">#3EBD93</color>
     <color name="blueWater">#005BC7</color>
     <color name="your_background_color">#31B54C</color>
+    <color name="state_need_water">#FF6B6B</color>
+    <color name="state_50_percent">#EAFF6B</color>
+    <color name="state_watered">#6EFF6B</color>
 
 </resources>

@@ -10,6 +10,7 @@ import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Plants;
 import com.google.firebase.database.DataSnapshot;
@@ -80,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
     private void Process1(){
         long timeStarted = System.currentTimeMillis();
         //GET ACCT
-        String usernameID = "1696198336724";
+        String usernameID = kangai.userID;
+        BooleanReference lock = new BooleanReference(false);
         //GET DEVICES
+        lock.lock();
         fd.retrieveData(this, "Users/"+usernameID+"/Devices", new FirebaseData.FirebaseDataCallback() {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
@@ -134,10 +137,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+                lock.unlock();
             }
         });
 
-        while (System.currentTimeMillis()-timeStarted<1000);
+        while (System.currentTimeMillis()-timeStarted<1000 && lock.isLocked());
     }
     private void Process2(){
         long timeStarted = System.currentTimeMillis();

@@ -77,7 +77,7 @@ public class Dashboard extends AppCompatActivity {
 
     private void setUpRecyclerView(){
         devices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        devices.setAdapter(new DevicesAdapter(new ArrayList<>(kangai.getDevices())));
+        devices.setAdapter(new DevicesAdapter(this, new ArrayList<>(kangai.getDevices())));
     }
 
 }
