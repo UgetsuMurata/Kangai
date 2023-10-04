@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.Menu;
 
@@ -32,6 +33,7 @@ public class Dashboard extends AppCompatActivity {
     RecyclerView devices, logs;
     CardView noDevices;
     Kangai kangai;
+    LinearLayout home;
 
     private enum deviceAmount{
         hasDevice, noDevice
@@ -43,8 +45,16 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.dashboard_dashboard);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        home = findViewById(R.id.home);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //if this is not Dashboard:
+//        home.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(Dashboard.this, Dashboard.class));
+//            }
+//        });
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
