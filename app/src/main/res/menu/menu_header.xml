@@ -6,5 +6,24 @@
         android:title="Profile"
         android:id="@+id/profile"
         android:icon="@drawable/ic_account_profile"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/add_device"
+                android:title="Add Device"/>
+            <item
+                android:id="@+id/edit_acct"
+                android:title="Edit Account"/>
+            <item
+                android:id="@+id/settings"
+                android:title="Settings"/>
+            <item
+                android:id="@+id/sign_out"
+                android:title="Sign Out"/>
+            <item
+                android:id="@+id/sign_in"
+                android:title="Sign In"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
 </menu>

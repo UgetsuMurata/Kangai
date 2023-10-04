@@ -8,16 +8,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.view.Menu;
 
+import com.example.kangai.Accounts.EditAccount;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Adapter.DevicesAdapter;
 import com.example.kangai.Dashboard.Adapter.LogsAdapter;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
+import com.example.kangai.Settings.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +70,29 @@ public class Dashboard extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_header, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_device:
+                startActivity(new Intent(this, AddDevice.class));
+                return true;
+            case R.id.edit_acct:
+                startActivity(new Intent(this, EditAccount.class));
+                return true;
+            case R.id.settings:
+                startActivity(new Intent(this, Settings.class));
+                return true;
+            case R.id.sign_out:
+                // SIGN OUT ACCOUNT, THEN CHANGE VISIBILITY
+                return true;
+            case R.id.sign_in:
+                // SIGN IN ACCOUNT, THEN CHANGE VISIBILITY
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void toggleDevices(deviceAmount amount){
