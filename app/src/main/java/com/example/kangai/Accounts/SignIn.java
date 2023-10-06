@@ -59,25 +59,31 @@ public class SignIn extends AppCompatActivity {
         fd.retrieveData(this, "ExistingUsernames/", new FirebaseData.FirebaseDataCallback() {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
-                for (DataSnapshot devices : dataSnapshot.getChildren()){
-                    String key = devices.getKey();
+                String key = null;
+                for (DataSnapshot devices : dataSnapshot.getChildren()) {
+                    String name = devices.getValue().toString();
+                    if (username.equals(name)) {
+                        key = devices.getKey();
+                        break;
+                    }
+                }
+                if (key != null){
                     fd.retrieveData(SignIn.this, "Users/" + key + "/AcctCredentials", new FirebaseData.FirebaseDataCallback(){
                         @Override
                         public void onDataReceived(DataSnapshot dataSnapshot) {
-                            Object name = dataSnapshot.child("Username").getValue();
-                            Object pass = dataSnapshot.child("Password").getValue();
-
-                            if (name.equals(username) && pass.equals(password)){
+                            String pass = dataSnapshot.child("Password").getValue().toString();
+                            if (pass.equals(password)){
                                 startActivity(new Intent(SignIn.this, Dashboard.class));
                                 finish();
                             }else{
-                                Toast.makeText(SignIn.this, "Username or Password did not match", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignIn.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+                } else {
+                    Toast.makeText(SignIn.this, "User not found.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 }
