@@ -1,5 +1,7 @@
 package com.example.kangai.Accounts;
 
+import static com.example.kangai.localStorage.LocalStorageHelper.setAccountCreatedFlag;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +9,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
@@ -76,6 +80,8 @@ public class SignUp extends AppCompatActivity {
                 if (valid){
                     Long id = System.currentTimeMillis();
                     fd.addValue("ExistingUsernames/"+id, username);
+
+                    setAccountCreatedFlag(SignUp.this,true, String.valueOf(id));
 
                     Map<String, Object> acctCred = new HashMap<>();
                     acctCred.put("Username", username);

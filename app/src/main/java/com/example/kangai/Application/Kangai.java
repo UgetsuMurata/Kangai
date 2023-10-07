@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.TimeHelper;
 import com.example.kangai.MainActivity;
@@ -30,11 +31,11 @@ public class Kangai extends Application {
     private List<Logs> logs;
     public String userID;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        userID = "1696198336724";
 
         FirebaseApp.initializeApp(this);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -59,6 +60,10 @@ public class Kangai extends Application {
     }
     public List<Logs> getLogs(){
         return logs;
+    }
+
+    public String getUserID(){
+        return userID;
     }
 
     public void setDevices(List<Device> devices){
@@ -205,4 +210,8 @@ public class Kangai extends Application {
         });
     }
 
+
+    public void setUserID(String userID){
+        this.userID = userID;
+    }
 }

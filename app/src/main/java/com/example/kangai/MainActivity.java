@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.kangai.Accounts.SignIn;
+import com.example.kangai.Accounts.SignUp;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
 import com.example.kangai.Dashboard.Dashboard;
@@ -16,7 +18,10 @@ import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
+import com.example.kangai.localStorage.LocalStorageHelper;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView label;
     FirebaseData fd;
     Kangai kangai;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,16 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
-            startActivity(new Intent(MainActivity.this, Dashboard.class));
+            if (LocalStorageHelper.isAccountCreated(this)) {
+                // User has created an account, redirect to Dashboard
+                kangai.setUserID(LocalStorageHelper.getAccount(this));
+                startActivity(new Intent(MainActivity.this, Dashboard.class));
+            } else {
+                // User has not created an account, redirect to Sign Up
+                startActivity(new Intent(MainActivity.this, SignIn.class));
+            }
+
+            // Finish the current activity to prevent going back to it
             finish();
         }).start();
     }

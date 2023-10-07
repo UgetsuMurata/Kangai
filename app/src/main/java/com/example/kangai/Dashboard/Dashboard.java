@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,12 +60,14 @@ public class Dashboard extends AppCompatActivity {
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
+
         reservoir = findViewById(R.id.reservoir);
         devices = findViewById(R.id.devices);
         logs = findViewById(R.id.logs);
         noDevices = findViewById(R.id.no_devices);
 
         kangai = Kangai.getInstance();
+
         List<Device> deviceList = kangai.getDevices();
         if (deviceList.size()==0) toggleDevices(deviceAmount.noDevice);
         else toggleDevices(deviceAmount.hasDevice);
