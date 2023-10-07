@@ -18,6 +18,7 @@ import com.example.kangai.Accounts.EditAccount;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Adapter.DevicesAdapter;
 import com.example.kangai.Dashboard.Adapter.LogsAdapter;
+import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
@@ -84,25 +85,8 @@ public class Dashboard extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_device:
-                startActivity(new Intent(this, AddDevice.class));
-                return true;
-            case R.id.edit_acct:
-                startActivity(new Intent(this, EditAccount.class));
-                return true;
-            case R.id.settings:
-                startActivity(new Intent(this, Settings.class));
-                return true;
-            case R.id.sign_out:
-                // SIGN OUT ACCOUNT, THEN CHANGE VISIBILITY
-                return true;
-            case R.id.sign_in:
-                // SIGN IN ACCOUNT, THEN CHANGE VISIBILITY
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        if (ToolbarMenu.ToolbarOption(this, item)) return true;
+        else return super.onOptionsItemSelected(item);
     }
 
     private void toggleDevices(deviceAmount amount){

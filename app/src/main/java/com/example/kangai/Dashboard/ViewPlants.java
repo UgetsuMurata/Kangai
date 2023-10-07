@@ -3,18 +3,23 @@ package com.example.kangai.Dashboard;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Plants;
@@ -24,6 +29,9 @@ public class ViewPlants extends AppCompatActivity {
 
     Kangai kangai;
     Device device;
+
+    LinearLayout home;
+
     TextView deviceName, slot1Name, slot2Name, slot3Name, slot4Name;
     TextView slot1LastWatered, slot2LastWatered, slot3LastWatered, slot4LastWatered;
     CardView slot1Status, slot2Status, slot3Status, slot4Status;
@@ -39,6 +47,19 @@ public class ViewPlants extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_viewplants);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        home = findViewById(R.id.home);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ViewPlants.this, Dashboard.class));
+            }
+        });
+        toolbar.setTitle("");
+        toolbar.setSubtitle("");
 
         kangai = Kangai.getInstance();
         deviceName = findViewById(R.id.device_name);
@@ -163,6 +184,18 @@ public class ViewPlants extends AppCompatActivity {
         });
         slot4EditState = new BooleanReference(false);
         slot4Edit.setOnClickListener(view -> editName(slot4EditState, slot4NameEdittext, slot4Name, slot4Edit, "Slot4"));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_header, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (ToolbarMenu.ToolbarOption(this, item)) return true;
+        else return super.onOptionsItemSelected(item);
     }
 
     private void editName(BooleanReference editState, EditText nameEditText, TextView slotName, ImageView slotEdit, String slotNumber){

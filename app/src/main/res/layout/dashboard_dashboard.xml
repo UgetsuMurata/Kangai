@@ -7,7 +7,6 @@
     tools:context=".Dashboard.Dashboard"
     android:orientation="vertical"
     android:gravity="center_horizontal">
-    <!--TODO: Header-->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
