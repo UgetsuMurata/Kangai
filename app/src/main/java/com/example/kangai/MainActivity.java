@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kangai.Accounts.SignIn;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
+import com.example.kangai.DEVELOPER.FIREBASE_;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.LocalStorageHelper;
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         fd = new FirebaseData();
 
-        final String Process1 = "Retrieving Resources";
-        final String Process2 = "Setting up Account";
+        final String Process1 = "Setting up Account";
+        final String Process2 = "Retrieving Resources";
         final String Process3 = "Setting up Firebase";
         kangai = Kangai.getInstance();
 
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 });
                 switch (process){
                     case Process1:
-                        Process1();
+                        Process1(((float) process_number.get() / loadingProcesses.size())*100);
                         break;
                     case Process2:
-                        Process2(((float) process_number.get() / loadingProcesses.size())*100);
+                        Process2();
                         break;
                     case Process3:
                         if (signedIn) Process3();
@@ -93,7 +94,22 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void Process1(){
+    private void Process1(Float value){
+        long timeStarted = System.currentTimeMillis();
+        signedIn = LocalStorageHelper.isAccountCreated(this);
+        while (System.currentTimeMillis()-timeStarted<500);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (signedIn) {
+                    kangai.setUserID(LocalStorageHelper.getAccount(MainActivity.this));
+                    label.setText(String.format("%s... %.0f%%", "Signed in", value));
+                } else label.setText(String.format("%s... %.0f%%", "No accounts found", value));
+            }
+        });
+        while (System.currentTimeMillis()-timeStarted<1000);
+    }
+    private void Process2(){
         long timeStarted = System.currentTimeMillis();
         //GET ACCT
         String usernameID = kangai.userID;
@@ -148,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
                                     new ArrayList<Plants>(){{add(plant1); add(plant2); add(plant3); add(plant4);}},
                                     Long.getLong(reservoir != null ? reservoir.toString() : "0"),
                                     Long.getLong(lastUpdate != null ? lastUpdate.toString() : "0"));
-
                             kangai.addDevice(device);
                         }
                     });
@@ -171,26 +186,11 @@ public class MainActivity extends AppCompatActivity {
         });
         while (System.currentTimeMillis()-timeStarted<1000 && lock.isLocked() && lock2.isLocked());
     }
-    private void Process2(Float value){
-        long timeStarted = System.currentTimeMillis();
-        signedIn = LocalStorageHelper.isAccountCreated(this);
-        while (System.currentTimeMillis()-timeStarted<500);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (signedIn) {
-                    kangai.setUserID(LocalStorageHelper.getAccount(MainActivity.this));
-                    label.setText(String.format("%s... %.0f%%", "Signed in", value));
-                } else label.setText(String.format("%s... %.0f%%", "No accounts found", value));
-            }
-        });
-        while (System.currentTimeMillis()-timeStarted<1000);
-    }
     private void Process3(){
         long timeStarted = System.currentTimeMillis();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
-        scoresRef.keepSynced(true);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
+//        scoresRef.keepSynced(true);
         while (System.currentTimeMillis()-timeStarted<1000);
     }
 }

@@ -107,10 +107,12 @@ public class AddDevice extends AppCompatActivity {
                             @Override
                             public void onDataReceived(DataSnapshot dataSnapshot) {
                                 boolean exists = false;
+                                String id = "";
                                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                     String childKey = childSnapshot.getKey();
                                     if (Objects.equals(childKey, result.toString())) {
                                         exists = true;
+                                        id = childKey;
                                         break;
                                     }
                                 }
@@ -118,7 +120,8 @@ public class AddDevice extends AppCompatActivity {
                                 if (exists){
                                     scannerLabel.setText("Valid Scan: Device Added!");
                                     scannerLabel.setTextColor(ThemedColor.getColorStateList(AddDevice.this, R.attr.confirm));
-
+                                    fd.updateValue("Devices/"+id+"/Manager/", kangai.getUserID());
+                                    fd.addValue("Users/"+kangai.getUserID()+"/Devices/"+id+"/", "");
                                     handler.postDelayed(() -> onBackPressed(), 3000);
                                 } else {
                                     scannerLabel.setText("Invalid Scan: Device Not Found");

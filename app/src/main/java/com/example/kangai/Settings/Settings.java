@@ -8,17 +8,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.kangai.Accounts.EditAccount;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.ToggleImage;
+import com.example.kangai.DEVELOPER.FIREBASE_;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.LocalStorageHelper;
 import com.example.kangai.Helpers.LocalStorageHelper.PrefNames;
 import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
@@ -27,6 +31,8 @@ public class Settings extends AppCompatActivity {
     LinearLayout home;
     ToggleImage smsNotif, pushNotif, statesCateg, wateringCateg, plantUpdatesCateg;
     FirebaseData fd;
+
+    Button clearDatabase, addDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,22 @@ public class Settings extends AppCompatActivity {
         statesCateg = findViewById(R.id.states_categ);
         wateringCateg = findViewById(R.id.watering_categ);
         plantUpdatesCateg = findViewById(R.id.plant_updates_categ);
+        clearDatabase = findViewById(R.id.clear_database);
+        addDevice = findViewById(R.id.add_device);
+
+        clearDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+                root.setValue(null);
+            }
+        });
+        addDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FIREBASE_.addDevice();
+            }
+        });
 
         fd = new FirebaseData();
 
