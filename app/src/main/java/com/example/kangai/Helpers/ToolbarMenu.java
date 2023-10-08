@@ -22,7 +22,7 @@ public class ToolbarMenu {
                 context.startActivity(new Intent(context, Settings.class));
                 return true;
             case R.id.sign_out:
-                // SIGN OUT ACCOUNT, THEN CHANGE VISIBILITY
+
                 return true;
             case R.id.sign_in:
                 // SIGN IN ACCOUNT, THEN CHANGE VISIBILITY

@@ -50,13 +50,6 @@ public class Dashboard extends AppCompatActivity {
         home = findViewById(R.id.home);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //if this is not Dashboard:
-//        home.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(Dashboard.this, Dashboard.class));
-//            }
-//        });
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
@@ -77,7 +70,6 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(Dashboard.this, AddDevice.class));
             }
         });
-        List<Logs> logsList = kangai.getLogs();
     }
 
     @Override
@@ -107,8 +99,9 @@ public class Dashboard extends AppCompatActivity {
         devices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         devices.setAdapter(new DevicesAdapter(this, new ArrayList<>(kangai.getDevices())));
         logs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        Collections.reverse(kangai.getLogs());
-        logs.setAdapter(new LogsAdapter(new ArrayList<>(kangai.getLogs())));
+        List<Logs> logsList = new ArrayList<>(kangai.getLogs());
+        Collections.reverse(logsList);
+        logs.setAdapter(new LogsAdapter(new ArrayList<>(logsList)));
     }
 
 }

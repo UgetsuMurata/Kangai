@@ -1,6 +1,6 @@
 package com.example.kangai.Accounts;
 
-import static com.example.kangai.localStorage.LocalStorageHelper.setAccountCreatedFlag;
+import static com.example.kangai.Helpers.LocalStorageHelper.setAccountCreatedFlag;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;

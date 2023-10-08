@@ -56,6 +56,7 @@ public class ViewPlants extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ViewPlants.this, Dashboard.class));
+                finish();
             }
         });
         toolbar.setTitle("");

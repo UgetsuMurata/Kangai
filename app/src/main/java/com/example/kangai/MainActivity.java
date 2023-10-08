@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.kangai.Accounts.SignIn;
-import com.example.kangai.Accounts.SignUp;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
 import com.example.kangai.Dashboard.Dashboard;
@@ -18,15 +16,13 @@ import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
-import com.example.kangai.localStorage.LocalStorageHelper;
+import com.example.kangai.Helpers.LocalStorageHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {

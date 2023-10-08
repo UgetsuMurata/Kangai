@@ -45,4 +45,183 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="14sp"
+        android:textColor="?text"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="14sp"
+        android:textColor="?text"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+        <com.example.kangai.CustomViews.ToggleImage
+            android:id="@+id/sms_notif"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:activeImage="@drawable/active_notif"
+            app:inactiveImage="@drawable/inactive_notif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="SMS"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Send SMS notifications to indicated number."
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="@color/greyBGDark"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+        <com.example.kangai.CustomViews.ToggleImage
+            android:id="@+id/push_notif"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:activeImage="@drawable/active_notif"
+            app:inactiveImage="@drawable/inactive_notif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Push Notification"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Send notifications in notification bar."
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="@color/greyBGDark"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="14sp"
+        android:textColor="?text"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+        <com.example.kangai.CustomViews.ToggleImage
+            android:id="@+id/states_categ"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:activeImage="@drawable/active_notif"
+            app:inactiveImage="@drawable/inactive_notif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="States"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Notifications on plant state changes."
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="@color/greyBGDark"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+        <com.example.kangai.CustomViews.ToggleImage
+            android:id="@+id/watering_categ"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:activeImage="@drawable/active_notif"
+            app:inactiveImage="@drawable/inactive_notif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Watering"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Notifications on watering updates."
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="@color/greyBGDark"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
+        <com.example.kangai.CustomViews.ToggleImage
+            android:id="@+id/plant_updates_categ"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:activeImage="@drawable/active_notif"
+            app:inactiveImage="@drawable/inactive_notif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Plant Updates"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="?text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Notifications on adding/removing plant in slots."
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/raleway_regular"
+            android:textColor="@color/greyBGDark"/>
+    </LinearLayout>
+
 </LinearLayout>

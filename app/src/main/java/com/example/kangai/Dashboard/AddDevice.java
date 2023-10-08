@@ -61,6 +61,7 @@ public class AddDevice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AddDevice.this, Dashboard.class));
+                finish();
             }
         });
         toolbar.setTitle("");

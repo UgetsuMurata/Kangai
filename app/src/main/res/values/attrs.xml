@@ -4,4 +4,12 @@
     <attr name="error" format="reference"/>
     <attr name="greyBG" format="reference"/>
     <attr name="confirm" format="reference"/>
+    <declare-styleable name="ToggleImage">
+        <attr name="activeImage" format="reference" />
+        <attr name="inactiveImage" format="reference"/>
+        <attr name="initialState" format="enum">
+            <enum name="open" value="1"/>
+            <enum name="close" value="0"/>
+        </attr>
+    </declare-styleable>
 </resources>
