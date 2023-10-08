@@ -13,11 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -27,6 +30,8 @@ public class SignIn extends AppCompatActivity {
     Button signInButton;
     TextView text2;
     TextView forgotPassword;
+
+    Kangai kangai;
 
     FirebaseData fd = new FirebaseData();
     String id;
@@ -42,6 +47,7 @@ public class SignIn extends AppCompatActivity {
         signInButton = findViewById(R.id.signInButton);
         text2 = findViewById(R.id.text2);
         forgotPassword = findViewById(R.id.forgotPass);
+        kangai = new Kangai();
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +86,6 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) {
                 // Handle sending the password reset email
                 String password = PasswordText.getText().toString();
-                // Implement your logic here to send the email or reset the password.
-                // You can use Firebase, Retrofit, or any other method.
-
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
@@ -134,6 +136,9 @@ public class SignIn extends AppCompatActivity {
                             String pass = dataSnapshot.child("Password").getValue().toString();
                             if (pass.equals(password)){
                                 startActivity(new Intent(SignIn.this, Dashboard.class));
+                                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                                DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
+                                scoresRef.keepSynced(true);
                                 finish();
                             }else{
                                 Toast.makeText(SignIn.this, "Incorrect Password", Toast.LENGTH_SHORT).show();

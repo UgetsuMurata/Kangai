@@ -1,25 +1,25 @@
 package com.example.kangai;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kangai.Accounts.SignIn;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.CustomViews.LeafLoadingBar;
 import com.example.kangai.Dashboard.Dashboard;
 import com.example.kangai.Firebase.FirebaseData;
+import com.example.kangai.Helpers.LocalStorageHelper;
 import com.example.kangai.Helpers.TimeHelper;
 import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
-import com.example.kangai.Helpers.LocalStorageHelper;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     TextView label;
     FirebaseData fd;
     Kangai kangai;
+    Boolean signedIn;
 
 
     @Override
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         fd = new FirebaseData();
 
         final String Process1 = "Retrieving Resources";
-        final String Process2 = "Processing";
-        final String Process3 = "Another Sample Loading";
+        final String Process2 = "Setting up Account";
+        final String Process3 = "Setting up Firebase";
         kangai = Kangai.getInstance();
 
         ArrayList<String> loadingProcesses = new ArrayList<>(Arrays.asList(
@@ -71,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
                         Process1();
                         break;
                     case Process2:
-                        Process2();
+                        Process2(((float) process_number.get() / loadingProcesses.size())*100);
                         break;
                     case Process3:
-                        Process3();
+                        if (signedIn) Process3();
                         break;
                 }
             }
@@ -170,14 +171,26 @@ public class MainActivity extends AppCompatActivity {
         });
         while (System.currentTimeMillis()-timeStarted<1000 && lock.isLocked() && lock2.isLocked());
     }
-    private void Process2(){
+    private void Process2(Float value){
         long timeStarted = System.currentTimeMillis();
-        //PROCESS 2
+        signedIn = LocalStorageHelper.isAccountCreated(this);
+        while (System.currentTimeMillis()-timeStarted<500);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (signedIn) {
+                    kangai.setUserID(LocalStorageHelper.getAccount(MainActivity.this));
+                    label.setText(String.format("%s... %.0f%%", "Signed in", value));
+                } else label.setText(String.format("%s... %.0f%%", "No accounts found", value));
+            }
+        });
         while (System.currentTimeMillis()-timeStarted<1000);
     }
     private void Process3(){
         long timeStarted = System.currentTimeMillis();
-        //PROCESS 3
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
+        scoresRef.keepSynced(true);
         while (System.currentTimeMillis()-timeStarted<1000);
     }
 }
