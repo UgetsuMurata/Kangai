@@ -115,7 +115,7 @@ public class Settings extends AppCompatActivity {
         values.put("wateringCateg", wateringCategState);
         values.put("plantUpdatesCateg", plantUpdatesCategState);
 
-        fd.addValues("User/"+ Kangai.getInstance().getUserID()+"/Settings/Notifications/", values);
+        fd.addValues("Users/"+ Kangai.getInstance().getUserID()+"/Settings/Notifications/", values);
 
         LocalStorageHelper.setPref(this, PrefNames.NOTIFICATION_SMS, smsNotifState);
         LocalStorageHelper.setPref(this, PrefNames.NOTIFICATION_PUSHNOTIF, pushNotifState);

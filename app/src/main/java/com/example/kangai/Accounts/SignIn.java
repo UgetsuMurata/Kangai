@@ -120,8 +120,9 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
                 String key = null;
+                String name = null;
                 for (DataSnapshot devices : dataSnapshot.getChildren()) {
-                    String name = devices.getValue().toString();
+                    name = devices.getValue().toString();
                     if (username.equals(name)) {
                         key = devices.getKey();
                         break;
@@ -129,16 +130,16 @@ public class SignIn extends AppCompatActivity {
                 }
                 if (key != null){
                     id = key;
-                    setAccountCreatedFlag(SignIn.this,true, id);
+                    setAccountCreatedFlag(SignIn.this,true, id, name);
                     fd.retrieveData(SignIn.this, "Users/" + key + "/AcctCredentials", new FirebaseData.FirebaseDataCallback(){
                         @Override
                         public void onDataReceived(DataSnapshot dataSnapshot) {
                             String pass = dataSnapshot.child("Password").getValue().toString();
                             if (pass.equals(password)){
                                 startActivity(new Intent(SignIn.this, Dashboard.class));
-                                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-                                DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
-                                scoresRef.keepSynced(true);
+//                                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//                                DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
+//                                scoresRef.keepSynced(true);
                                 finish();
                             }else{
                                 Toast.makeText(SignIn.this, "Incorrect Password", Toast.LENGTH_SHORT).show();

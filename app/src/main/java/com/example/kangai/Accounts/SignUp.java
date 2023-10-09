@@ -79,7 +79,7 @@ public class SignUp extends AppCompatActivity {
                     Long id = System.currentTimeMillis();
                     fd.addValue("ExistingUsernames/"+id, username);
 
-                    setAccountCreatedFlag(SignUp.this,true, String.valueOf(id));
+                    setAccountCreatedFlag(SignUp.this,true, String.valueOf(id), username);
 
                     Map<String, Object> acctCred = new HashMap<>();
                     acctCred.put("Username", username);

@@ -1,10 +1,15 @@
 package com.example.kangai.Helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.kangai.Accounts.EditAccount;
+import com.example.kangai.Accounts.SignIn;
 import com.example.kangai.Dashboard.AddDevice;
 import com.example.kangai.R;
 import com.example.kangai.Settings.Settings;
@@ -22,10 +27,10 @@ public class ToolbarMenu {
                 context.startActivity(new Intent(context, Settings.class));
                 return true;
             case R.id.sign_out:
-
-                return true;
-            case R.id.sign_in:
-                // SIGN IN ACCOUNT, THEN CHANGE VISIBILITY
+                LocalStorageHelper.signOut(context);
+                context.startActivity(new Intent(context, SignIn.class));
+                Activity activity = (Activity) context;
+                activity.finish();
                 return true;
             default:
                 return false;

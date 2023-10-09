@@ -30,6 +30,7 @@ public class Kangai extends Application {
     private List<Device> devices;
     private List<Logs> logs;
     public String userID;
+    public String username;
 
 
     @Override
@@ -64,6 +65,9 @@ public class Kangai extends Application {
 
     public String getUserID(){
         return userID;
+    }
+    public String getUsername(){
+        return username;
     }
 
     public void setDevices(List<Device> devices){
@@ -213,5 +217,8 @@ public class Kangai extends Application {
 
     public void setUserID(String userID){
         this.userID = userID;
+    }
+    public void setUsername(String username){
+        this.username = username;
     }
 }

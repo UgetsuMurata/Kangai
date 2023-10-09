@@ -25,9 +25,12 @@ import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
 import com.example.kangai.Settings.Settings;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity {
 

@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
             }
             if (LocalStorageHelper.isAccountCreated(this)) {
                 // User has created an account, redirect to Dashboard
-                kangai.setUserID(LocalStorageHelper.getAccount(this));
+                ArrayList<String> accountValues = LocalStorageHelper.getAccount(this);
+                kangai.setUserID(accountValues.get(0));
+                kangai.setUsername(accountValues.get(1));
                 startActivity(new Intent(MainActivity.this, Dashboard.class));
             } else {
                 // User has not created an account, redirect to Sign Up
@@ -102,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (signedIn) {
-                    kangai.setUserID(LocalStorageHelper.getAccount(MainActivity.this));
+                    ArrayList<String> accountValues = LocalStorageHelper.getAccount(MainActivity.this);
+                    kangai.setUserID(accountValues.get(0));
+                    kangai.setUsername(accountValues.get(1));
                     label.setText(String.format("%s... %.0f%%", "Signed in", value));
                 } else label.setText(String.format("%s... %.0f%%", "No accounts found", value));
             }
