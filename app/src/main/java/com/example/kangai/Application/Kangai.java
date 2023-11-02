@@ -28,6 +28,7 @@ public class Kangai extends Application {
 
     private FirebaseData fd;
     private List<Device> devices;
+    private Device device;
     private List<Logs> logs;
     public String userID;
     public String username;
@@ -69,6 +70,7 @@ public class Kangai extends Application {
     public String getUsername(){
         return username;
     }
+    public Device getDevice(){return device;}
 
     public void setDevices(List<Device> devices){
         this.devices = devices;
@@ -221,4 +223,5 @@ public class Kangai extends Application {
     public void setUsername(String username){
         this.username = username;
     }
+    public void setDevice(Device device){this.device = device;}
 }

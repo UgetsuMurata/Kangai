@@ -189,7 +189,7 @@ public class ViewPlants extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_header, menu);
+        getMenuInflater().inflate(R.menu.view_plants_menu_header, menu);
         return true;
     }
 

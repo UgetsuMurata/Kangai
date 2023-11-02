@@ -1,5 +1,6 @@
 package com.example.kangai.Dashboard;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,8 @@ public class Dashboard extends AppCompatActivity {
     Kangai kangai;
     LinearLayout home;
 
+    Integer ADD_DEVICE = 1;
+
     private enum deviceAmount{
         hasDevice, noDevice
     }
@@ -70,7 +73,7 @@ public class Dashboard extends AppCompatActivity {
         noDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, AddDevice.class));
+                startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE);
             }
         });
     }
@@ -107,4 +110,13 @@ public class Dashboard extends AppCompatActivity {
         logs.setAdapter(new LogsAdapter(new ArrayList<>(logsList)));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_DEVICE){
+            if (resultCode == RESULT_OK){
+                setUpRecyclerView();
+            }
+        }
+    }
 }

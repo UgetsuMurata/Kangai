@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.ViewPlants;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.R;
@@ -42,6 +43,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.Recycler
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ViewPlants.class);
+                Kangai.getInstance().setDevice(device);
                 intent.putExtra("ID", device.getId());
                 context.startActivity(intent);
             }

@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -27,11 +28,15 @@ import com.example.kangai.Application.Kangai;
 import com.example.kangai.Helpers.ThemedColor;
 import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.ToolbarMenu;
+import com.example.kangai.MainActivity;
+import com.example.kangai.Objects.Device;
+import com.example.kangai.Objects.Plants;
 import com.example.kangai.R;
 import com.example.kangai.Settings.Settings;
 import com.google.firebase.database.DataSnapshot;
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AddDevice extends AppCompatActivity {
@@ -118,11 +123,69 @@ public class AddDevice extends AppCompatActivity {
                                 }
                                 Handler handler = new Handler();
                                 if (exists){
+                                    for (Device device : kangai.getDevices()) {
+                                        if (device.getId().equals(id)){
+                                            scannerLabel.setText("Valid Scan: Device already in account!");
+                                            scannerLabel.setTextColor(ThemedColor.getColorStateList(AddDevice.this, R.attr.confirm));
+                                            handler.postDelayed(() -> onBackPressed(), 3000);
+                                        }
+                                    }
                                     scannerLabel.setText("Valid Scan: Device Added!");
                                     scannerLabel.setTextColor(ThemedColor.getColorStateList(AddDevice.this, R.attr.confirm));
                                     fd.updateValue("Devices/"+id+"/Manager/", kangai.getUserID());
                                     fd.addValue("Users/"+kangai.getUserID()+"/Devices/"+id+"/", "");
-                                    handler.postDelayed(() -> onBackPressed(), 3000);
+
+                                    String finalId = id;
+                                    fd.retrieveData(AddDevice.this, "Users/"+kangai.getUserID()+"/Devices/"+finalId+"/", new FirebaseData.FirebaseDataCallback() {
+                                        @Override
+                                        public void onDataReceived(DataSnapshot dataSnapshot) {
+                                            Object name = dataSnapshot.child("Name").getValue();
+                                            Object manager = dataSnapshot.child("Manager").getValue();
+                                            Object reservoir = dataSnapshot.child("Reservoir").getValue();
+                                            Object lastUpdate = dataSnapshot.child("LastUpdate").getValue();
+
+                                            DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
+                                            Plants plant1 = new Plants(1,
+                                                    Slot1.child("Name").getValue().toString(),
+                                                    Slot1.child("Status").getValue().toString(),
+                                                    Slot1.child("Value").getValue().toString(),
+                                                    Slot1.child("LastWatered").getValue().toString());
+
+                                            DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
+                                            Plants plant2 = new Plants(1,
+                                                    Slot2.child("Name").getValue().toString(),
+                                                    Slot2.child("Status").getValue().toString(),
+                                                    Slot2.child("Value").getValue().toString(),
+                                                    Slot2.child("LastWatered").getValue().toString());
+
+                                            DataSnapshot Slot3 = dataSnapshot.child("Plants/Slot3");
+                                            Plants plant3 = new Plants(1,
+                                                    Slot3.child("Name").getValue().toString(),
+                                                    Slot3.child("Status").getValue().toString(),
+                                                    Slot3.child("Value").getValue().toString(),
+                                                    Slot3.child("LastWatered").getValue().toString());
+
+                                            DataSnapshot Slot4 = dataSnapshot.child("Plants/Slot4");
+                                            Plants plant4 = new Plants(1,
+                                                    Slot4.child("Name").getValue().toString(),
+                                                    Slot4.child("Status").getValue().toString(),
+                                                    Slot4.child("Value").getValue().toString(),
+                                                    Slot4.child("LastWatered").getValue().toString());
+
+                                            Device device = new Device(finalId,
+                                                    manager != null ? manager.toString() : null,
+                                                    name != null ? name.toString() : null,
+                                                    new ArrayList<Plants>(){{add(plant1); add(plant2); add(plant3); add(plant4);}},
+                                                    Long.getLong(reservoir != null ? reservoir.toString() : "0"),
+                                                    Long.getLong(lastUpdate != null ? lastUpdate.toString() : "0"));
+                                            kangai.addDevice(device);
+                                        }
+                                    });
+                                    handler.postDelayed(() -> {
+                                        Intent returnIntent = new Intent(AddDevice.this, Dashboard.class);
+                                        setResult(Activity.RESULT_OK, returnIntent);
+                                        finish();
+                                    }, 3000);
                                 } else {
                                     scannerLabel.setText("Invalid Scan: Device Not Found");
                                     scannerLabel.setTextColor(ThemedColor.getColorStateList(AddDevice.this, R.attr.error));
