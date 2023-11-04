@@ -72,6 +72,11 @@ public class FirebaseData {
         childRef.updateChildren(value);
     }
 
+    public void updateValues(String childPath, Map<String, Object> value){
+        DatabaseReference childRef = databaseRef.child(childPath);
+        childRef.updateChildren(value);
+    }
+
     public void removeData(String childpath){
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference nodeRef = databaseRef.child(childpath);
