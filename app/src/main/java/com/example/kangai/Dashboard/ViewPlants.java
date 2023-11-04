@@ -1,8 +1,14 @@
 package com.example.kangai.Dashboard;
 
+import static com.example.kangai.Helpers.Utilities.timestampTo12HourFormat;
+import static com.example.kangai.Helpers.Utilities.toTitle;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +28,15 @@ import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.Objects.BooleanReference;
 import com.example.kangai.Objects.Device;
+import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
 import com.example.kangai.R;
 
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
+
+@SuppressLint("DefaultLocale")
 public class ViewPlants extends AppCompatActivity {
 
     Kangai kangai;
@@ -32,16 +44,14 @@ public class ViewPlants extends AppCompatActivity {
 
     LinearLayout home;
 
-    TextView deviceName, slot1Name, slot2Name, slot3Name, slot4Name;
-    TextView slot1LastWatered, slot2LastWatered, slot3LastWatered, slot4LastWatered;
-    CardView slot1Status, slot2Status, slot3Status, slot4Status;
-    CardView slot1Water, slot2Water, slot3Water, slot4Water;
-    ImageView slot1Edit, slot2Edit, slot3Edit, slot4Edit;
-    EditText slot1NameEdittext, slot2NameEdittext, slot3NameEdittext, slot4NameEdittext;
-    BooleanReference slot1EditState, slot2EditState, slot3EditState, slot4EditState;
+    CardView slot1, slot2, slot3, slot4;
+    TextView deviceName, reservoir;
     Boolean hasChanges = false;
 
     FirebaseData fd;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,44 +62,23 @@ public class ViewPlants extends AppCompatActivity {
         home = findViewById(R.id.home);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ViewPlants.this, Dashboard.class));
-                finish();
-            }
+        home.setOnClickListener(view -> {
+            startActivity(new Intent(ViewPlants.this, Dashboard.class));
+            finish();
         });
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
+        //initialize views and objects
         kangai = Kangai.getInstance();
-        deviceName = findViewById(R.id.device_name);
-        slot1Name = findViewById(R.id.slot1_name);
-        slot2Name = findViewById(R.id.slot2_name);
-        slot3Name = findViewById(R.id.slot3_name);
-        slot4Name = findViewById(R.id.slot4_name);
-        slot1Status = findViewById(R.id.slot1_status);
-        slot2Status = findViewById(R.id.slot2_status);
-        slot3Status = findViewById(R.id.slot3_status);
-        slot4Status = findViewById(R.id.slot4_status);
-        slot1Water = findViewById(R.id.slot1_water);
-        slot2Water = findViewById(R.id.slot2_water);
-        slot3Water = findViewById(R.id.slot3_water);
-        slot4Water = findViewById(R.id.slot4_water);
-        slot1Edit = findViewById(R.id.slot1_edit_name);
-        slot2Edit = findViewById(R.id.slot2_edit_name);
-        slot3Edit = findViewById(R.id.slot3_edit_name);
-        slot4Edit = findViewById(R.id.slot4_edit_name);
-        slot1NameEdittext = findViewById(R.id.slot1_name_edittext);
-        slot2NameEdittext = findViewById(R.id.slot2_name_edittext);
-        slot3NameEdittext = findViewById(R.id.slot3_name_edittext);
-        slot4NameEdittext = findViewById(R.id.slot4_name_edittext);
-        slot1LastWatered = findViewById(R.id.slot1_last_watered);
-        slot2LastWatered = findViewById(R.id.slot2_last_watered);
-        slot3LastWatered = findViewById(R.id.slot3_last_watered);
-        slot4LastWatered = findViewById(R.id.slot4_last_watered);
-
         fd = new FirebaseData();
+
+        deviceName = findViewById(R.id.device_name);
+        reservoir = findViewById(R.id.reservoir);
+        slot1 = findViewById(R.id.slot1);
+        slot2 = findViewById(R.id.slot2);
+        slot3 = findViewById(R.id.slot3);
+        slot4 = findViewById(R.id.slot4);
 
         Intent intent = getIntent();
         for (Device deviceItem : kangai.getDevices()) {
@@ -99,92 +88,122 @@ public class ViewPlants extends AppCompatActivity {
             }
         }
         if (device == null) finish(); //end this activity if there is no device chosen. Meaning, unexpected entry.
+
         deviceName.setText(device.getName());
 
         Plants Slot1Plant = device.getPlantSlots().get(0);
         Plants Slot2Plant = device.getPlantSlots().get(1);
         Plants Slot3Plant = device.getPlantSlots().get(2);
         Plants Slot4Plant = device.getPlantSlots().get(3);
-        //SET SLOT 1
-        slot1Name.setText(Slot1Plant.getName());
-        slot1LastWatered.setText(Slot1Plant.getLastWatered());
-        switch (Slot1Plant.getStatus()){
-            case "RED":
-                slot1Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_need_water)));
+        setUpSlot(Slot1Plant, slot1, 1);
+        setUpSlot(Slot2Plant, slot2, 2);
+        setUpSlot(Slot3Plant, slot3, 3);
+        setUpSlot(Slot4Plant, slot4, 4);
+
+        long reservoirWaterLevel = device.getReservoir_water_level();
+        double percentage = (reservoirWaterLevel / 1023.0) * 100.0;
+        String formattedPercentage = String.format("%.0f%%", percentage);
+        reservoir.setText(formattedPercentage);
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Plants Slot1Plant = device.getPlantSlots().get(0);
+                Plants Slot2Plant = device.getPlantSlots().get(1);
+                Plants Slot3Plant = device.getPlantSlots().get(2);
+                Plants Slot4Plant = device.getPlantSlots().get(3);
+                updateSlotStatus(Slot1Plant, slot1);
+                updateSlotStatus(Slot2Plant, slot2);
+                updateSlotStatus(Slot3Plant, slot3);
+                updateSlotStatus(Slot4Plant, slot4);
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(runnable);
+    }
+
+    public void setUpSlot(Plants plant, CardView slot, Integer slotNum){
+        if (!plant.exists()){
+            slot.findViewById(R.id.exists).setVisibility(View.GONE);
+            slot.findViewById(R.id.not_exists).setVisibility(View.VISIBLE);
+            slot.findViewById(R.id.not_exists).setOnClickListener(view -> initializeSlot(slot, slotNum));
+            return;
+        }
+        slot.findViewById(R.id.exists).setVisibility(View.VISIBLE);
+        slot.findViewById(R.id.not_exists).setVisibility(View.GONE);
+
+        updateSlotStatus(plant, slot);
+
+        slot.findViewById(R.id.water_now_button).setOnClickListener(view -> sendWaterCommand(slotNum));
+
+        slot.findViewById(R.id.delete_button).setOnClickListener(view -> removeSlot(slot, slotNum));
+    }
+
+    public void initializeSlot(CardView slot, Integer slotNum){
+        slot.findViewById(R.id.exists).setVisibility(View.VISIBLE);
+        slot.findViewById(R.id.not_exists).setVisibility(View.GONE);
+
+        HashMap<String, Object> slotData = new HashMap<>();
+        slotData.put("LastWatered", 0);
+        slotData.put("Name", String.format("Slot %d", slotNum));
+        slotData.put("Status", "DRY");
+        slotData.put("Value", 0);
+        fd.addValues(String.format("Devices/%s/Plants/Slot%d", device.getId(), slotNum), slotData);
+
+        Plants plants = new Plants(slotNum,
+                                    String.format("Slot %d", slotNum),
+                                    "DRY",
+                                    "0",
+                                    "0");
+        setUpSlot(plants, slot, slotNum);
+    }
+
+    public void removeSlot(CardView slot, Integer slotNum){
+        slot.findViewById(R.id.exists).setVisibility(View.GONE);
+        slot.findViewById(R.id.not_exists).setVisibility(View.VISIBLE);
+        fd.removeData(String.format("Devices/%s/Plants/Slot%d", device.getId(), slotNum));
+    }
+
+    public void updateSlotStatus(Plants plant, CardView slot){
+        if (!plant.exists()) return;
+
+        TextView slotName = slot.findViewById(R.id.name);
+        slotName.setText(plant.getName());
+
+        switch (plant.getStatus()) {
+            case "WET":
+                slot.findViewById(R.id.status).setBackgroundTintList(ColorStateList.valueOf(
+                        this.getResources().getColor(R.color.state_watered)));
                 break;
-            case "YELLOW":
-                slot1Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_50_percent)));
+            case "SEMI-WET":
+                slot.findViewById(R.id.status).setBackgroundTintList(ColorStateList.valueOf(
+                        this.getResources().getColor(R.color.state_50_percent)));
                 break;
-            case "GREEN":
-                slot1Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_watered)));
+            case "DRY":
+                slot.findViewById(R.id.status).setBackgroundTintList(ColorStateList.valueOf(
+                        this.getResources().getColor(R.color.state_need_water)));
                 break;
         }
-        slot1Water.setOnClickListener(view -> {
-            fd.addValue("Devices/" + device.getId() + "/AppCommand/", "WATER_SLOT1");
-            Toast.makeText(this, "Watering "+device.getPlantSlots().get(0).getName()+"...", Toast.LENGTH_SHORT).show();
-        });
-        slot1EditState = new BooleanReference(false);
-        slot1Edit.setOnClickListener(view -> editName(slot1EditState, slot1NameEdittext, slot1Name, slot1Edit, "Slot1"));
-        //SET SLOT 2
-        slot2Name.setText(Slot2Plant.getName());
-        slot2LastWatered.setText(Slot2Plant.getLastWatered());
-        switch (Slot2Plant.getStatus()){
-            case "RED":
-                slot2Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_need_water)));
-                break;
-            case "YELLOW":
-                slot2Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_50_percent)));
-                break;
-            case "GREEN":
-                slot2Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_watered)));
-                break;
+        TextView currentStatus = slot.findViewById(R.id.current_status);
+        currentStatus.setText(String.format("Status: %s", toTitle(plant.getStatus())));
+
+        TextView lastWatered = slot.findViewById(R.id.last_watered_status);
+        if (!plant.getLastWatered().equals("0")) {
+            lastWatered.setVisibility(View.VISIBLE);
+            lastWatered.setText(String.format("Last Watered: %s", timestampTo12HourFormat(Long.valueOf(plant.getLastWatered()))));
+        } else {
+            lastWatered.setVisibility(View.GONE);
         }
-        slot2Water.setOnClickListener(view -> {
-            fd.addValue("Devices/" + device.getId() + "/AppCommand/", "WATER_SLOT2");
-            Toast.makeText(this, "Watering "+device.getPlantSlots().get(1).getName()+"...", Toast.LENGTH_SHORT).show();
-        });
-        slot2EditState = new BooleanReference(false);
-        slot2Edit.setOnClickListener(view -> editName(slot2EditState, slot2NameEdittext, slot2Name, slot2Edit, "Slot2"));
-        //SET SLOT 3
-        slot3Name.setText(Slot3Plant.getName());
-        slot3LastWatered.setText(Slot3Plant.getLastWatered());
-        switch (Slot3Plant.getStatus()){
-            case "RED":
-                slot3Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_need_water)));
-                break;
-            case "YELLOW":
-                slot3Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_50_percent)));
-                break;
-            case "GREEN":
-                slot3Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_watered)));
-                break;
-        }
-        slot3Water.setOnClickListener(view -> {
-            fd.addValue("Devices/" + device.getId() + "/AppCommand/", "WATER_SLOT3");
-            Toast.makeText(this, "Watering "+device.getPlantSlots().get(2).getName()+"...", Toast.LENGTH_SHORT).show();
-        });
-        slot3EditState = new BooleanReference(false);
-        slot3Edit.setOnClickListener(view -> editName(slot3EditState, slot3NameEdittext, slot3Name, slot3Edit, "Slot3"));
-        //SET SLOT 4
-        slot4Name.setText(Slot4Plant.getName());
-        slot4LastWatered.setText(Slot4Plant.getLastWatered());
-        switch (Slot4Plant.getStatus()){
-            case "RED":
-                slot4Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_need_water)));
-                break;
-            case "YELLOW":
-                slot4Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_50_percent)));
-                break;
-            case "GREEN":
-                slot4Status.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.state_watered)));
-                break;
-        }
-        slot4Water.setOnClickListener(view -> {
-            fd.addValue("Devices/" + device.getId() + "/AppCommand/", "WATER_SLOT4");
-            Toast.makeText(this, "Watering "+device.getPlantSlots().get(3).getName()+"...", Toast.LENGTH_SHORT).show();
-        });
-        slot4EditState = new BooleanReference(false);
-        slot4Edit.setOnClickListener(view -> editName(slot4EditState, slot4NameEdittext, slot4Name, slot4Edit, "Slot4"));
+    }
+
+    public void sendWaterCommand(Integer slotNum){
+        kangai.addLogs(new Logs(System.currentTimeMillis(),
+                String.format("Manually watered Slot %d of %s", slotNum, device.getName())));
+        fd.updateValue(String.format("Devices/%s/AppCommand", device.getId()),
+                String.format("WATER_SLOT%d", slotNum));
+
+        Toast.makeText(this, String.format("Sending command to water Slot %d", slotNum),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -199,36 +218,17 @@ public class ViewPlants extends AppCompatActivity {
         else return super.onOptionsItemSelected(item);
     }
 
-    private void editName(BooleanReference editState, EditText nameEditText, TextView slotName, ImageView slotEdit, String slotNumber){
-        if (editState.value()){
-            String newName = nameEditText.getText().toString().trim();
-            if (!newName.equals("")){
-                slotName.setText(newName);
-                fd.addValue("Devices/"+device.getId()+"/Plants/"+slotNumber+"/Name/", newName);
-                hasChanges = true;
-            }
-            slotName.setVisibility(View.VISIBLE);
-            nameEditText.setVisibility(View.GONE);
-            slotEdit.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.edit, getTheme()));
-        } else {
-            String currentName = slotName.getText().toString().trim();
-            slotName.setVisibility(View.GONE);
-            nameEditText.setVisibility(View.VISIBLE);
-            nameEditText.setHint(currentName);
-            slotEdit.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.check, getTheme()));
-        }
-        editState.switchValue();
-    }
-
     @Override
     protected void onDestroy() {
         if (hasChanges) kangai.updateADevice(this, device.getId());
+        handler.removeCallbacks(runnable);
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         if (hasChanges) kangai.updateADevice(this, device.getId());
+        handler.removeCallbacks(runnable);
         super.onBackPressed();
     }
 }

@@ -2,6 +2,7 @@ package com.example.kangai.Application;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.kangai.Dashboard.Dashboard;
@@ -33,6 +34,8 @@ public class Kangai extends Application {
     public String userID;
     public String username;
 
+    private Handler handler = new Handler();
+    private Runnable updatePlants;
 
     @Override
     public void onCreate() {
@@ -45,6 +48,15 @@ public class Kangai extends Application {
         fd = new FirebaseData();
         devices = new ArrayList<>();
         logs = new ArrayList<>();
+
+        updatePlants = new Runnable() {
+            @Override
+            public void run() {
+
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(updatePlants);
     }
 
     public static Kangai getInstance() {
@@ -54,7 +66,7 @@ public class Kangai extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-
+        handler.removeCallbacks(updatePlants);
     }
 
     public List<Device> getDevices(){

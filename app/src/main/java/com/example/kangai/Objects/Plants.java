@@ -1,6 +1,6 @@
 package com.example.kangai.Objects;
 
-import androidx.annotation.NonNull;
+import android.util.Log;
 
 public class Plants {
     Integer slotNumber;
@@ -12,6 +12,10 @@ public class Plants {
         this.status = status;
         this.value = value;
         this.lastWatered = lastWatered;
+    }
+
+    public Boolean exists(){
+        return slotNumber!=null;
     }
 
     public Integer getSlotNumber() {
@@ -47,7 +51,7 @@ public class Plants {
     }
 
     public String getLastWatered() {
-        return "Last Watered: "+lastWatered;
+        return lastWatered;
     }
 
     public void setLastWatered(String lastWatered) {

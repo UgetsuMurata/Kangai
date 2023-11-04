@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="10dp"
+    android:layout_height="80dp"
+    app:cardCornerRadius="15dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="?text"
+    android:backgroundTint="@color/greenBG"
+    android:layout_marginBottom="10dp">
+    <LinearLayout
+        android:id="@+id/exists"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:text="Plant Slot 1"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/delete"
+                android:padding="5dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+                android:id="@+id/status"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/state_need_water"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/current_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Status: Wet"
+                    android:gravity="center"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/last_watered_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="center"
+                    android:text="Last Watered: 10:15PM"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/water_now_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:text="Water Now"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/raleway_regular"
+                android:textColor="@color/black"
+                android:background="@color/confirmDark"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/not_exists"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="+ Click to add slot"
+        android:fontFamily="@font/raleway_regular"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:visibility="gone"/>
+</com.google.android.material.card.MaterialCardView>

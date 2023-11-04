@@ -14,8 +14,8 @@ public class Device {
         this.manager = manager;
         this.name = name;
         this.plantSlots = plantSlots;
-        this.reservoir_water_level = reservoir_water_level;
-        this.lastUpdate = lastUpdate;
+        this.reservoir_water_level = reservoir_water_level==null?0:reservoir_water_level;
+        this.lastUpdate = lastUpdate==null?0:lastUpdate;
     }
 
     public String getId() {

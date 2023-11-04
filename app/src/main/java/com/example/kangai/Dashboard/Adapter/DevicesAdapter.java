@@ -57,12 +57,10 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.Recycler
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView deviceImage;
         private final TextView deviceName;
         private final View itemView;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            deviceImage = itemView.findViewById(R.id.device_image);
             deviceName = itemView.findViewById(R.id.device_name);
             this.itemView = itemView;
         }

@@ -135,39 +135,51 @@ public class MainActivity extends AppCompatActivity {
                             Object lastUpdate = dataSnapshot.child("LastUpdate").getValue();
 
                             DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
-                            Plants plant1 = new Plants(1,
-                                    Slot1.child("Name").getValue().toString(),
-                                    Slot1.child("Status").getValue().toString(),
-                                    Slot1.child("Value").getValue().toString(),
-                                    Slot1.child("LastWatered").getValue().toString());
-
+                            Plants plant1 = new Plants(null, null, null, null, null);
+                            if (Slot1.getValue() != null) {
+                                plant1 = new Plants(1,
+                                        Slot1.child("Name").getValue().toString(),
+                                        Slot1.child("Status").getValue().toString(),
+                                        Slot1.child("Value").getValue().toString(),
+                                        Slot1.child("LastWatered").getValue().toString());
+                            }
                             DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
-                            Plants plant2 = new Plants(1,
-                                    Slot2.child("Name").getValue().toString(),
-                                    Slot2.child("Status").getValue().toString(),
-                                    Slot2.child("Value").getValue().toString(),
-                                    Slot2.child("LastWatered").getValue().toString());
-
+                            Plants plant2 = new Plants(null, null, null, null, null);
+                            if (Slot2.getValue() != null) {
+                                plant2 = new Plants(2,
+                                        Slot2.child("Name").getValue().toString(),
+                                        Slot2.child("Status").getValue().toString(),
+                                        Slot2.child("Value").getValue().toString(),
+                                        Slot2.child("LastWatered").getValue().toString());
+                            }
                             DataSnapshot Slot3 = dataSnapshot.child("Plants/Slot3");
-                            Plants plant3 = new Plants(1,
-                                    Slot3.child("Name").getValue().toString(),
-                                    Slot3.child("Status").getValue().toString(),
-                                    Slot3.child("Value").getValue().toString(),
-                                    Slot3.child("LastWatered").getValue().toString());
-
+                            Plants plant3 = new Plants(null, null, null, null, null);
+                            if (Slot3.getValue() != null) {
+                                plant3 = new Plants(3,
+                                        Slot3.child("Name").getValue().toString(),
+                                        Slot3.child("Status").getValue().toString(),
+                                        Slot3.child("Value").getValue().toString(),
+                                        Slot3.child("LastWatered").getValue().toString());
+                            }
                             DataSnapshot Slot4 = dataSnapshot.child("Plants/Slot4");
-                            Plants plant4 = new Plants(1,
-                                    Slot4.child("Name").getValue().toString(),
-                                    Slot4.child("Status").getValue().toString(),
-                                    Slot4.child("Value").getValue().toString(),
-                                    Slot4.child("LastWatered").getValue().toString());
-
+                            Plants plant4 = new Plants(null, null, null, null, null);
+                            if (Slot4.getValue() != null) {
+                                plant4 = new Plants(4,
+                                        Slot4.child("Name").getValue().toString(),
+                                        Slot4.child("Status").getValue().toString(),
+                                        Slot4.child("Value").getValue().toString(),
+                                        Slot4.child("LastWatered").getValue().toString());
+                            }
+                            Plants finalPlant1 = plant1;
+                            Plants finalPlant2 = plant2;
+                            Plants finalPlant3 = plant3;
+                            Plants finalPlant4 = plant4;
                             Device device = new Device(key,
                                     manager != null ? manager.toString() : null,
                                     name != null ? name.toString() : null,
-                                    new ArrayList<Plants>(){{add(plant1); add(plant2); add(plant3); add(plant4);}},
-                                    Long.getLong(reservoir != null ? reservoir.toString() : "0"),
-                                    Long.getLong(lastUpdate != null ? lastUpdate.toString() : "0"));
+                                    new ArrayList<Plants>(){{add(finalPlant1); add(finalPlant2); add(finalPlant3); add(finalPlant4);}},
+                                    Long.valueOf(reservoir != null ? reservoir.toString() : "0"),
+                                    Long.valueOf(lastUpdate != null ? lastUpdate.toString() : "0"));
                             kangai.addDevice(device);
                         }
                     });

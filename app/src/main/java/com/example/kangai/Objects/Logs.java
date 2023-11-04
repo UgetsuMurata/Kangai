@@ -11,6 +11,10 @@ public class Logs {
         this.timestamp = timestamp;
         this.log = log;
     }
+    public Logs(Long timestamp, String log) {
+        this.timestamp = String.valueOf(timestamp);
+        this.log = log;
+    }
 
     public String getTimestamp() {
         return timestamp;
