@@ -112,6 +112,9 @@ public class Dashboard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_DEVICE){
             if (resultCode == RESULT_OK){
+                Device newDevice = kangai.getNewDevice(); // ito yung data na naretrieve
+                kangai.nullifyNewDevice();
+
                 setUpRecyclerView();
             }
         }

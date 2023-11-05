@@ -192,6 +192,7 @@ public class AddDevice extends AppCompatActivity {
                                                     Long.valueOf(reservoir != null ? reservoir.toString() : "0"),
                                                     Long.valueOf(lastUpdate != null ? lastUpdate.toString() : "0"));
                                             kangai.addDevice(device);
+                                            kangai.setNewDevice(device);
                                         }
                                     });
                                     handler.postDelayed(() -> {

@@ -37,6 +37,8 @@ public class Kangai extends Application {
     private Handler handler = new Handler();
     private Runnable updatePlants;
 
+    private Device newDevice;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -236,4 +238,14 @@ public class Kangai extends Application {
         this.username = username;
     }
     public void setDevice(Device device){this.device = device;}
+
+    public Device getNewDevice() {
+        return newDevice;
+    }
+    public void setNewDevice(Device newDevice) {
+        this.newDevice = newDevice;
+    }
+    public void nullifyNewDevice(){
+        this.newDevice = null;
+    }
 }
