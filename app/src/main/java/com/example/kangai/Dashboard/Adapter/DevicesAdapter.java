@@ -55,6 +55,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.Recycler
         return deviceArrayList.size();
     }
 
+
+
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView deviceName;

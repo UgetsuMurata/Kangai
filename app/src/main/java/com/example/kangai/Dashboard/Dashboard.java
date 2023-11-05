@@ -78,6 +78,7 @@ public class Dashboard extends AppCompatActivity {
                 startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE);
             }
         });
+
     }
 
     private void setUpUsername() {
@@ -91,16 +92,32 @@ public class Dashboard extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_header, menu);
-        return true;
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear(); // Clear the existing menu items
+        if (kangai.getDevices().size() > 0) {
+            getMenuInflater().inflate(R.menu.menu_header_with_add_button, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_header, menu);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (ToolbarMenu.ToolbarOption(this, item)) return true;
-        else return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.add) {
+            // Handle the "Add" button click
+            startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE);
+            return true;
+        } else if (ToolbarMenu.ToolbarOption(this, item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
 
     private void toggleDevices(deviceAmount amount){
         if (amount == deviceAmount.hasDevice){
@@ -127,9 +144,6 @@ public class Dashboard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_DEVICE){
             if (resultCode == RESULT_OK){
-                Device newDevice = kangai.getNewDevice(); // ito yung data na naretrieve
-                kangai.nullifyNewDevice();
-
                 setUpRecyclerView();
             }
         }
