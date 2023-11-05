@@ -41,6 +41,7 @@ public class Dashboard extends AppCompatActivity {
     LinearLayout home;
 
     Integer ADD_DEVICE = 1;
+    TextView username;
 
     private enum deviceAmount{
         hasDevice, noDevice
@@ -61,12 +62,14 @@ public class Dashboard extends AppCompatActivity {
         devices = findViewById(R.id.devices);
         logs = findViewById(R.id.logs);
         noDevices = findViewById(R.id.no_devices);
+        username = findViewById(R.id.username);
 
         kangai = Kangai.getInstance();
 
         List<Device> deviceList = kangai.getDevices();
         if (deviceList.size()==0) toggleDevices(deviceAmount.noDevice);
         else toggleDevices(deviceAmount.hasDevice);
+        username.setText(kangai.getUsername());
         noDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
