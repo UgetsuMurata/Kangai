@@ -35,7 +35,6 @@ import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity {
 
-    TextView reservoir;
     RecyclerView devices, logs;
     CardView noDevices;
     Kangai kangai;
@@ -59,8 +58,6 @@ public class Dashboard extends AppCompatActivity {
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
-
-        reservoir = findViewById(R.id.reservoir);
         devices = findViewById(R.id.devices);
         logs = findViewById(R.id.logs);
         noDevices = findViewById(R.id.no_devices);
