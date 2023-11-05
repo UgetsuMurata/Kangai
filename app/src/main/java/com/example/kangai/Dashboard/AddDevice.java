@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,6 +116,7 @@ public class AddDevice extends AppCompatActivity {
                                 String id = "";
                                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                     String childKey = childSnapshot.getKey();
+                                    Log.d("CHECK DEVICE", childKey + " vs " + result);
                                     if (Objects.equals(childKey, result.toString())) {
                                         exists = true;
                                         id = childKey;

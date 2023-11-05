@@ -40,6 +40,10 @@ public class ToolbarMenu {
                 FirebaseData fd = new FirebaseData();
                 fd.removeData("Users/"+Kangai.getInstance().getUserID()+"/Devices/"+device.getId());
                 fd.updateValue("Devices/"+device.getId()+"/Manager", "NULL");
+                Kangai.getInstance().showNotification(
+                        Kangai.getInstance().getNotificationID(),
+                        "Device deletion",
+                        String.format("Deleted device %s from this account.", device.getName()));
                 context.startActivity(new Intent(context, Dashboard.class));
                 activity.finish();
             default:

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,9 @@ public class Dashboard extends AppCompatActivity {
     Integer ADD_DEVICE = 1;
     TextView username;
 
+    private Handler handler = new Handler();
+    private Runnable updateRecyclerviews;
+
     private enum deviceAmount{
         hasDevice, noDevice
     }
@@ -79,6 +83,19 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        updateRecyclerviews = new Runnable() {
+            @Override
+            public void run() {
+                UpdateRecyclerviews();
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(updateRecyclerviews);
+    }
+
+    private void UpdateRecyclerviews() {
+        if (kangai.isDevicesHasChanges()) displayDevices();
+        if (kangai.isLogsHasChanges()) displayLogs();
     }
 
     private void setUpUsername() {
@@ -127,12 +144,19 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void setUpRecyclerView(){
-        devices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        devices.setAdapter(new DevicesAdapter(this, new ArrayList<>(kangai.getDevices())));
+        displayDevices();
+        displayLogs();
+    }
+
+    private void displayLogs(){
         logs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         List<Logs> logsList = new ArrayList<>(kangai.getLogs());
         Collections.reverse(logsList);
         logs.setAdapter(new LogsAdapter(new ArrayList<>(logsList)));
+    }
+    private void displayDevices(){
+        devices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        devices.setAdapter(new DevicesAdapter(this, new ArrayList<>(kangai.getDevices())));
     }
 
     @Override
@@ -140,8 +164,14 @@ public class Dashboard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_DEVICE){
             if (resultCode == RESULT_OK){
-                setUpRecyclerView();
+                displayDevices();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(updateRecyclerviews);
     }
 }

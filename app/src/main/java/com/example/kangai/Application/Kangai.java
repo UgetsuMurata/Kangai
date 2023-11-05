@@ -1,6 +1,7 @@
 package com.example.kangai.Application;
 
 import static com.example.kangai.Application.Kangai.NotificationID.stateChange;
+import static com.example.kangai.Helpers.TimeHelper.readableToMillis;
 
 import android.Manifest;
 import android.app.Application;
@@ -32,6 +33,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +49,11 @@ public class Kangai extends Application {
     private FirebaseData fd;
     private List<Device> devices;
     private List<Device> referenceDevices;
+    private boolean devicesHasChanges = false;
     private Device device;
     private List<Logs> logs;
+    private List<Logs> referenceLogs;
+    private boolean logsHasChanges = false;
     public String userID;
     public String username;
 
@@ -73,6 +78,7 @@ public class Kangai extends Application {
         devices = new ArrayList<>();
         referenceDevices = new ArrayList<>();
         logs = new ArrayList<>();
+        referenceLogs = new ArrayList<>();
 
         createNotificationChannel();
 
@@ -263,6 +269,14 @@ public class Kangai extends Application {
         this.logs = logs;
     }
 
+    public List<Logs> getReferenceLogs() {
+        return referenceLogs;
+    }
+
+    public void setReferenceLogs(List<Logs> referenceLogs) {
+        this.referenceLogs = referenceLogs;
+    }
+
     public void addLogs(Logs logs) {
         this.logs.add(logs);
     }
@@ -308,6 +322,30 @@ public class Kangai extends Application {
         this.newDevice = null;
     }
 
+    public boolean isLogsHasChanges() {
+        return logsHasChanges;
+    }
+
+    public void setLogsHasChanges(boolean logsHasChanges) {
+        this.logsHasChanges = logsHasChanges;
+    }
+
+    public boolean isDevicesHasChanges() {
+        return devicesHasChanges;
+    }
+
+    public void setDevicesHasChanges(boolean devicesHasChanges) {
+        this.devicesHasChanges = devicesHasChanges;
+    }
+
+    public Integer getNotificationID() {
+        return notificationID++;
+    }
+
+    public void setNotificationID(Integer notificationID) {
+        this.notificationID = notificationID;
+    }
+
     public void UpdateDataRetrieved() {
         fd.retrieveData(this, "Users/" + userID + "/Devices", new FirebaseData.FirebaseDataCallback() {
             @Override
@@ -326,7 +364,7 @@ public class Kangai extends Application {
                             Device reference = null;
                             for (Device device : getReferenceDevices()) {
                                 if (device.getId().equals(key)) {
-                                    if (device.getLastUpdate().equals(lastUpdate.toString())) {
+                                    if (Objects.equals(String.valueOf(device.getLastUpdate()), lastUpdate.toString())) {
                                         addDevice(device);
                                         return;
                                     }
@@ -346,15 +384,16 @@ public class Kangai extends Application {
                                     Plants refPlant1 = reference.getPlantSlots().get(0);
                                     if (!(Objects.equals(refPlant1.getStatus(), plant1.getStatus()))) {
                                         HashMap<String, Object> value = new HashMap<>();
+                                        //TODO: REMOVE THIS LOG UPDATE ONCE NODEMCU IS FIXED
                                         value.put(String.valueOf(System.currentTimeMillis()),
                                                 String.format("%s's Plant 1 state changed to %s.",
                                                         name.toString(), plant1.getStatus()));
                                         fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        notificationID++;
-                                        showNotification(notificationID,
+                                        showNotification(getNotificationID(),
                                                 stateChange("Slot 1"),
                                                 String.format("%s's Plant 1 state changed to %s.",
                                                         name, plant1.getStatus()));
+                                        devicesHasChanges = true;
                                     }
                                 }
                             }
@@ -374,11 +413,11 @@ public class Kangai extends Application {
                                                 String.format("%s's Plant 2 state changed to %s.",
                                                         name.toString(), plant2.getStatus()));
                                         fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        notificationID++;
-                                        showNotification(notificationID,
+                                        showNotification(getNotificationID(),
                                                 stateChange("Slot 2"),
                                                 String.format("%s's Plant 2 state changed to %s.",
                                                         name, plant2.getStatus()));
+                                        devicesHasChanges = true;
                                     }
                                 }
                             }
@@ -398,11 +437,11 @@ public class Kangai extends Application {
                                                 String.format("%s's Plant 3 state changed to %s.",
                                                         name.toString(), plant3.getStatus()));
                                         fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        notificationID++;
-                                        showNotification(notificationID,
+                                        showNotification(getNotificationID(),
                                                 stateChange("Slot 3"),
                                                 String.format("%s's Plant 3 state changed to %s.",
                                                         name, plant3.getStatus()));
+                                        devicesHasChanges = true;
                                     }
                                 }
                             }
@@ -422,11 +461,11 @@ public class Kangai extends Application {
                                                 String.format("%s's Plant 4 state changed to %s.",
                                                         name.toString(), plant4.getStatus()));
                                         fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        notificationID++;
-                                        showNotification(notificationID,
+                                        showNotification(getNotificationID(),
                                                 stateChange("Slot 4"),
                                                 String.format("%s's Plant 4 state changed to %s.",
                                                         name, plant4.getStatus()));
+                                        devicesHasChanges = true;
                                     }
                                 }
                             }
@@ -454,12 +493,29 @@ public class Kangai extends Application {
         fd.retrieveData(this, "Users/" + userID + "/Settings/Logs/", new FirebaseData.FirebaseDataCallback() {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
-                setLogs(new ArrayList<>());
+                setReferenceLogs(getLogs());
+                ArrayList<String> logKeys = new ArrayList<>();
+                for (Logs log : referenceLogs){
+                    try {
+                        logKeys.add(String.valueOf(readableToMillis(log.getTimestamp())));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    /*
+                    * TODO:
+                    *  Fix this.
+                    *   Scenario:
+                    *       logKeys and timestamp will never be the same since they are in diff
+                    *       formats.
+                    * */
+                }
                 for (DataSnapshot logDS : dataSnapshot.getChildren()) {
                     String timestamp = logDS.getKey();
+                    if (logKeys.contains(timestamp)) continue;
                     String log = String.valueOf(logDS.getValue() != null ? logDS.getValue() : "");
                     addLogs(new Logs(TimeHelper.millisToReadable(
                             Long.valueOf(timestamp != null ? timestamp : "0")), log));
+                    logsHasChanges = true;
                 }
             }
         });
