@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String Process1 = "Setting up Account";
         final String Process2 = "Retrieving Resources";
-        final String Process3 = "Setting up Firebase";
+        final String Process3 = "Connecting to Firebase";
         kangai = Kangai.getInstance();
 
         ArrayList<String> loadingProcesses = new ArrayList<>(Arrays.asList(
@@ -204,9 +204,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void Process3(){
         long timeStarted = System.currentTimeMillis();
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-//        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("Users/"+kangai.getUserID()+"/");
-//        scoresRef.keepSynced(true);
         while (System.currentTimeMillis()-timeStarted<1000);
     }
 }
