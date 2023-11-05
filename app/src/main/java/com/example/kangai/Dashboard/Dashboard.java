@@ -94,11 +94,7 @@ public class Dashboard extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear(); // Clear the existing menu items
-        if (kangai.getDevices().size() > 0) {
-            getMenuInflater().inflate(R.menu.menu_header_with_add_button, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_header, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_header_with_add_button, menu);
         return super.onPrepareOptionsMenu(menu);
     }
 
