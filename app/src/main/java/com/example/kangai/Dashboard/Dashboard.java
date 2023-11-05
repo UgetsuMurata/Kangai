@@ -20,11 +20,13 @@ import com.example.kangai.Accounts.EditAccount;
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Adapter.DevicesAdapter;
 import com.example.kangai.Dashboard.Adapter.LogsAdapter;
+import com.example.kangai.Firebase.FirebaseData;
 import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
 import com.example.kangai.Settings.Settings;
+import com.google.firebase.database.DataSnapshot;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -69,11 +71,21 @@ public class Dashboard extends AppCompatActivity {
         List<Device> deviceList = kangai.getDevices();
         if (deviceList.size()==0) toggleDevices(deviceAmount.noDevice);
         else toggleDevices(deviceAmount.hasDevice);
-        username.setText(kangai.getUsername());
+        setUpUsername();
         noDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE);
+            }
+        });
+    }
+
+    private void setUpUsername() {
+        FirebaseData fd = new FirebaseData();
+        fd.retrieveData(this, String.format("ExistingUsernames/%s", kangai.getUserID()), new FirebaseData.FirebaseDataCallback() {
+            @Override
+            public void onDataReceived(DataSnapshot dataSnapshot) {
+                username.setText(dataSnapshot.getValue().toString());
             }
         });
     }
