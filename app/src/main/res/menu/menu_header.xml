@@ -12,9 +12,6 @@
                 android:id="@+id/edit_acct"
                 android:title="Edit Account"/>
             <item
-                android:id="@+id/settings"
-                android:title="Settings"/>
-            <item
                 android:id="@+id/sign_out"
                 android:title="Sign Out"/>
         </menu>

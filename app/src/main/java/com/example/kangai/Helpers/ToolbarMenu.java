@@ -25,9 +25,6 @@ public class ToolbarMenu {
             case R.id.edit_acct:
                 context.startActivity(new Intent(context, EditAccount.class));
                 return true;
-            case R.id.settings:
-                context.startActivity(new Intent(context, Settings.class));
-                return true;
             case R.id.sign_out:
                 LocalStorageHelper.signOut(context);
                 context.startActivity(new Intent(context, SignIn.class));
