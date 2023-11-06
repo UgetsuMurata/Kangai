@@ -117,6 +117,11 @@ public class ViewPlants extends AppCompatActivity {
                 }
                 if (device == null) finish();
 
+                long reservoirWaterLevel = device.getReservoir_water_level();
+                double percentage = (reservoirWaterLevel / 1023.0) * 100.0;
+                String formattedPercentage = String.format("%.0f%%", percentage);
+                reservoir.setText(formattedPercentage);
+
                 Plants Slot1Plant = device.getPlantSlots().get(0);
                 Plants Slot2Plant = device.getPlantSlots().get(1);
                 Plants Slot3Plant = device.getPlantSlots().get(2);
