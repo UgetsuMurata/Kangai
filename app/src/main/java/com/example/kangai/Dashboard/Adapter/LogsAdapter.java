@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kangai.Dashboard.ViewPlants;
+import com.example.kangai.Helpers.TimeHelper;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
@@ -38,7 +39,7 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.RecyclerViewHo
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         Logs log = logsArrayList.get(position);
         holder.logView.setText(log.getLog());
-        holder.timestamp.setText(log.getTimestamp());
+        holder.timestamp.setText(TimeHelper.millisToReadable(log.getTimestamp()));
     }
 
     @Override

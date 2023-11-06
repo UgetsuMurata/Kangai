@@ -1,26 +1,21 @@
 package com.example.kangai.Objects;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 public class Logs {
-    String timestamp, log;
+    Long timestamp;
+    String log;
 
-    public Logs(String timestamp, String log) {
+    public Logs(Long timestamp, String log) {
         this.timestamp = timestamp;
         this.log = log;
     }
-    public Logs(Long timestamp, String log) {
-        this.timestamp = String.valueOf(timestamp);
-        this.log = log;
-    }
 
-    public String getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

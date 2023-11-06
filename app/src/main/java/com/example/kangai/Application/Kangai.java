@@ -1,6 +1,7 @@
 package com.example.kangai.Application;
 
 import static com.example.kangai.Application.Kangai.NotificationID.stateChange;
+import static com.example.kangai.Helpers.TimeHelper.millisToReadable;
 import static com.example.kangai.Helpers.TimeHelper.readableToMillis;
 
 import android.Manifest;
@@ -290,8 +291,7 @@ public class Kangai extends Application {
                 for (DataSnapshot logDS : dataSnapshot.getChildren()) {
                     String timestamp = logDS.getKey();
                     String log = String.valueOf(logDS.getValue() != null ? logDS.getValue() : "");
-                    logs.add(new Logs(TimeHelper.millisToReadable(
-                            Long.valueOf(timestamp != null ? timestamp : "0")), log));
+                    logs.add(new Logs(Long.valueOf(timestamp != null ? timestamp : "0"), log));
                 }
             }
         });
@@ -351,6 +351,7 @@ public class Kangai extends Application {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
                 setReferenceDevices(getDevices());
+                devicesHasChanges = false;
                 setDevices(new ArrayList<>());
                 for (DataSnapshot devices : dataSnapshot.getChildren()) {
                     String key = devices.getKey();
@@ -361,6 +362,7 @@ public class Kangai extends Application {
                             Object manager = dataSnapshot.child("Manager").getValue();
                             Object reservoir = dataSnapshot.child("Reservoir").getValue();
                             Object lastUpdate = dataSnapshot.child("LastUpdate").getValue();
+                            Log.d("UpdateDataRetrieved", "CREATING THE NEW DEVICE OBJECT");
                             Device reference = null;
                             for (Device device : getReferenceDevices()) {
                                 if (device.getId().equals(key)) {
@@ -488,33 +490,23 @@ public class Kangai extends Application {
                         }
                     });
                 }
+
             }
         });
         fd.retrieveData(this, "Users/" + userID + "/Settings/Logs/", new FirebaseData.FirebaseDataCallback() {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
                 setReferenceLogs(getLogs());
-                ArrayList<String> logKeys = new ArrayList<>();
+                ArrayList<Long> logKeys = new ArrayList<>();
                 for (Logs log : referenceLogs){
-                    try {
-                        logKeys.add(String.valueOf(readableToMillis(log.getTimestamp())));
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                    /*
-                    * TODO:
-                    *  Fix this.
-                    *   Scenario:
-                    *       logKeys and timestamp will never be the same since they are in diff
-                    *       formats.
-                    * */
+                    logKeys.add(log.getTimestamp());
                 }
+                logsHasChanges = false;
                 for (DataSnapshot logDS : dataSnapshot.getChildren()) {
                     String timestamp = logDS.getKey();
-                    if (logKeys.contains(timestamp)) continue;
+                    if (logKeys.contains(Long.valueOf(timestamp))) continue;
                     String log = String.valueOf(logDS.getValue() != null ? logDS.getValue() : "");
-                    addLogs(new Logs(TimeHelper.millisToReadable(
-                            Long.valueOf(timestamp != null ? timestamp : "0")), log));
+                    addLogs(new Logs(Long.valueOf(timestamp != null ? timestamp : "0"), log));
                     logsHasChanges = true;
                 }
             }
@@ -557,17 +549,9 @@ public class Kangai extends Application {
     }
 
     public static class NotificationID{
-        static String CHANNEL_ID = "1";
         static String TITLE_STATE_CHANGE = "State Change";
-        static String TITLE_WATER = "Watered";
-        public static String getChannelID(){
-            return CHANNEL_ID;
-        }
         public static String stateChange(String slot){
             return String.format("%s %s", slot, TITLE_STATE_CHANGE);
-        }
-        public static String water(String slot){
-            return String.format("%s %s", slot, TITLE_WATER);
         }
     }
 

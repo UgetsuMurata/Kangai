@@ -194,8 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot logDS : dataSnapshot.getChildren()) {
                     String timestamp = logDS.getKey();
                     String log = String.valueOf(logDS.getValue()!=null?logDS.getValue():"");
-                    kangai.addLogs(new Logs(TimeHelper.millisToReadable(
-                            Long.valueOf(timestamp!=null?timestamp:"0")), log));
+                    kangai.addLogs(new Logs(Long.valueOf(timestamp!=null?timestamp:"0"), log));
                 }
                 lock2.unlock();
             }
