@@ -7,15 +7,14 @@ import java.util.List;
 public class Device {
     String id, manager, name;
     List<Plants> plantSlots;
-    Long reservoir_water_level, lastUpdate;
+    Long reservoir_water_level;
 
-    public Device(String id, String manager, String name, List<Plants> plantSlots, Long reservoir_water_level, Long lastUpdate) {
+    public Device(String id, String manager, String name, List<Plants> plantSlots, Long reservoir_water_level) {
         this.id = id;
         this.manager = manager;
         this.name = name;
         this.plantSlots = plantSlots;
         this.reservoir_water_level = reservoir_water_level==null?0:reservoir_water_level;
-        this.lastUpdate = lastUpdate==null?0:lastUpdate;
     }
 
     public String getId() {
@@ -56,14 +55,6 @@ public class Device {
 
     public void setReservoir_water_level(Long reservoir_water_level) {
         this.reservoir_water_level = reservoir_water_level;
-    }
-
-    public Long getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Long lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 
 }

@@ -59,15 +59,6 @@
                     android:fontFamily="@font/raleway_medium"
                     android:textColor="@color/black"
                     android:textSize="12sp"/>
-                <TextView
-                    android:id="@+id/last_watered_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway_regular"
-                    android:gravity="center"
-                    android:text="Last Watered: 10:15PM"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/water_now_button"

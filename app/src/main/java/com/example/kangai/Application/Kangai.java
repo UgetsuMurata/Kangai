@@ -158,30 +158,12 @@ public class Kangai extends Application {
                             DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
                             Plants plant1 = new Plants(1,
                                     Slot1.child("Name").getValue().toString(),
-                                    Slot1.child("Status").getValue().toString(),
-                                    Slot1.child("Value").getValue().toString(),
-                                    Slot1.child("LastWatered").getValue().toString());
+                                    Slot1.child("Status").getValue().toString());
 
                             DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
                             Plants plant2 = new Plants(1,
                                     Slot2.child("Name").getValue().toString(),
-                                    Slot2.child("Status").getValue().toString(),
-                                    Slot2.child("Value").getValue().toString(),
-                                    Slot2.child("LastWatered").getValue().toString());
-
-                            DataSnapshot Slot3 = dataSnapshot.child("Plants/Slot3");
-                            Plants plant3 = new Plants(1,
-                                    Slot3.child("Name").getValue().toString(),
-                                    Slot3.child("Status").getValue().toString(),
-                                    Slot3.child("Value").getValue().toString(),
-                                    Slot3.child("LastWatered").getValue().toString());
-
-                            DataSnapshot Slot4 = dataSnapshot.child("Plants/Slot4");
-                            Plants plant4 = new Plants(1,
-                                    Slot4.child("Name").getValue().toString(),
-                                    Slot4.child("Status").getValue().toString(),
-                                    Slot4.child("Value").getValue().toString(),
-                                    Slot4.child("LastWatered").getValue().toString());
+                                    Slot2.child("Status").getValue().toString());
 
                             Device device = new Device(key,
                                     manager != null ? manager.toString() : null,
@@ -189,11 +171,8 @@ public class Kangai extends Application {
                                     new ArrayList<Plants>() {{
                                         add(plant1);
                                         add(plant2);
-                                        add(plant3);
-                                        add(plant4);
                                     }},
-                                    Long.getLong(reservoir != null ? reservoir.toString() : "0"),
-                                    Long.getLong(lastUpdate != null ? lastUpdate.toString() : "0"));
+                                    Long.getLong(reservoir != null ? reservoir.toString() : "0"));
 
                             addDevice(device);
                         }
@@ -219,35 +198,16 @@ public class Kangai extends Application {
                 Object name = dataSnapshot.child("Name").getValue();
                 Object manager = dataSnapshot.child("Manager").getValue();
                 Object reservoir = dataSnapshot.child("Reservoir").getValue();
-                Object lastUpdate = dataSnapshot.child("LastUpdate").getValue();
 
                 DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
                 Plants plant1 = new Plants(1,
                         Slot1.child("Name").getValue().toString(),
-                        Slot1.child("Status").getValue().toString(),
-                        Slot1.child("Value").getValue().toString(),
-                        Slot1.child("LastWatered").getValue().toString());
+                        Slot1.child("Status").getValue().toString());
 
                 DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
-                Plants plant2 = new Plants(1,
+                Plants plant2 = new Plants(2,
                         Slot2.child("Name").getValue().toString(),
-                        Slot2.child("Status").getValue().toString(),
-                        Slot2.child("Value").getValue().toString(),
-                        Slot2.child("LastWatered").getValue().toString());
-
-                DataSnapshot Slot3 = dataSnapshot.child("Plants/Slot3");
-                Plants plant3 = new Plants(1,
-                        Slot3.child("Name").getValue().toString(),
-                        Slot3.child("Status").getValue().toString(),
-                        Slot3.child("Value").getValue().toString(),
-                        Slot3.child("LastWatered").getValue().toString());
-
-                DataSnapshot Slot4 = dataSnapshot.child("Plants/Slot4");
-                Plants plant4 = new Plants(1,
-                        Slot4.child("Name").getValue().toString(),
-                        Slot4.child("Status").getValue().toString(),
-                        Slot4.child("Value").getValue().toString(),
-                        Slot4.child("LastWatered").getValue().toString());
+                        Slot2.child("Status").getValue().toString());
 
                 Device device = new Device(id,
                         manager != null ? manager.toString() : null,
@@ -255,11 +215,8 @@ public class Kangai extends Application {
                         new ArrayList<Plants>() {{
                             add(plant1);
                             add(plant2);
-                            add(plant3);
-                            add(plant4);
                         }},
-                        Long.getLong(reservoir != null ? reservoir.toString() : "0"),
-                        Long.getLong(lastUpdate != null ? lastUpdate.toString() : "0"));
+                        Long.getLong(reservoir != null ? reservoir.toString() : "0"));
 
                 devices.add(finalDevicesID, device);
             }
@@ -361,27 +318,20 @@ public class Kangai extends Application {
                             Object name = dataSnapshot.child("Name").getValue();
                             Object manager = dataSnapshot.child("Manager").getValue();
                             Object reservoir = dataSnapshot.child("Reservoir").getValue();
-                            Object lastUpdate = dataSnapshot.child("LastUpdate").getValue();
                             Log.d("UpdateDataRetrieved", "CREATING THE NEW DEVICE OBJECT");
                             Device reference = null;
                             for (Device device : getReferenceDevices()) {
                                 if (device.getId().equals(key)) {
-                                    if (Objects.equals(String.valueOf(device.getLastUpdate()), lastUpdate.toString())) {
-                                        addDevice(device);
-                                        return;
-                                    }
                                     reference = device;
                                     break;
                                 }
                             }
                             DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
-                            Plants plant1 = new Plants(null, null, null, null, null);
+                            Plants plant1 = new Plants(null, null, null);
                             if (Slot1.getValue() != null) {
                                 plant1 = new Plants(1,
                                         Slot1.child("Name").getValue().toString(),
-                                        Slot1.child("Status").getValue().toString(),
-                                        Slot1.child("Value").getValue().toString(),
-                                        Slot1.child("LastWatered").getValue().toString());
+                                        Slot1.child("Status").getValue().toString());
                                 if (reference != null) {
                                     Plants refPlant1 = reference.getPlantSlots().get(0);
                                     if (!(Objects.equals(refPlant1.getStatus(), plant1.getStatus()))) {
@@ -400,13 +350,11 @@ public class Kangai extends Application {
                                 }
                             }
                             DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
-                            Plants plant2 = new Plants(null, null, null, null, null);
+                            Plants plant2 = new Plants(null, null, null);
                             if (Slot2.getValue() != null) {
                                 plant2 = new Plants(2,
                                         Slot2.child("Name").getValue().toString(),
-                                        Slot2.child("Status").getValue().toString(),
-                                        Slot2.child("Value").getValue().toString(),
-                                        Slot2.child("LastWatered").getValue().toString());
+                                        Slot2.child("Status").getValue().toString());
                                 if (reference != null) {
                                     Plants refPlant = reference.getPlantSlots().get(1);
                                     if (!(Objects.equals(refPlant.getStatus(), plant2.getStatus()))) {
@@ -423,69 +371,16 @@ public class Kangai extends Application {
                                     }
                                 }
                             }
-                            DataSnapshot Slot3 = dataSnapshot.child("Plants/Slot3");
-                            Plants plant3 = new Plants(null, null, null, null, null);
-                            if (Slot3.getValue() != null) {
-                                plant3 = new Plants(3,
-                                        Slot3.child("Name").getValue().toString(),
-                                        Slot3.child("Status").getValue().toString(),
-                                        Slot3.child("Value").getValue().toString(),
-                                        Slot3.child("LastWatered").getValue().toString());
-                                if (reference != null) {
-                                    Plants refPlant = reference.getPlantSlots().get(2);
-                                    if (!(Objects.equals(refPlant.getStatus(), plant3.getStatus()))) {
-                                        HashMap<String, Object> value = new HashMap<>();
-                                        value.put(String.valueOf(System.currentTimeMillis()),
-                                                String.format("%s's Plant 3 state changed to %s.",
-                                                        name.toString(), plant3.getStatus()));
-                                        fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        showNotification(getNotificationID(),
-                                                stateChange("Slot 3"),
-                                                String.format("%s's Plant 3 state changed to %s.",
-                                                        name, plant3.getStatus()));
-                                        devicesHasChanges = true;
-                                    }
-                                }
-                            }
-                            DataSnapshot Slot4 = dataSnapshot.child("Plants/Slot4");
-                            Plants plant4 = new Plants(null, null, null, null, null);
-                            if (Slot4.getValue() != null) {
-                                plant4 = new Plants(4,
-                                        Slot4.child("Name").getValue().toString(),
-                                        Slot4.child("Status").getValue().toString(),
-                                        Slot4.child("Value").getValue().toString(),
-                                        Slot4.child("LastWatered").getValue().toString());
-                                if (reference != null) {
-                                    Plants refPlant = reference.getPlantSlots().get(3);
-                                    if (!(Objects.equals(refPlant.getStatus(), plant4.getStatus()))) {
-                                        HashMap<String, Object> value = new HashMap<>();
-                                        value.put(String.valueOf(System.currentTimeMillis()),
-                                                String.format("%s's Plant 4 state changed to %s.",
-                                                        name.toString(), plant4.getStatus()));
-                                        fd.addValues("Users/" + userID + "/Settings/Logs", value);
-                                        showNotification(getNotificationID(),
-                                                stateChange("Slot 4"),
-                                                String.format("%s's Plant 4 state changed to %s.",
-                                                        name, plant4.getStatus()));
-                                        devicesHasChanges = true;
-                                    }
-                                }
-                            }
                             Plants finalPlant1 = plant1;
                             Plants finalPlant2 = plant2;
-                            Plants finalPlant3 = plant3;
-                            Plants finalPlant4 = plant4;
                             Device device = new Device(key,
                                     manager != null ? manager.toString() : null,
                                     name != null ? name.toString() : null,
                                     new ArrayList<Plants>() {{
                                         add(finalPlant1);
                                         add(finalPlant2);
-                                        add(finalPlant3);
-                                        add(finalPlant4);
                                     }},
-                                    Long.valueOf(reservoir != null ? reservoir.toString() : "0"),
-                                    Long.valueOf(lastUpdate != null ? lastUpdate.toString() : "0"));
+                                    Long.valueOf(reservoir != null ? reservoir.toString() : "0"));
                             addDevice(device);
                         }
                     });

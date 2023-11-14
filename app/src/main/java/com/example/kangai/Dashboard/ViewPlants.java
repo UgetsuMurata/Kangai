@@ -45,7 +45,7 @@ public class ViewPlants extends AppCompatActivity {
 
     LinearLayout home;
 
-    CardView slot1, slot2, slot3, slot4;
+    CardView slot1, slot2;
     TextView deviceName, reservoir;
     Boolean hasChanges = false;
 
@@ -78,8 +78,6 @@ public class ViewPlants extends AppCompatActivity {
         reservoir = findViewById(R.id.reservoir);
         slot1 = findViewById(R.id.slot1);
         slot2 = findViewById(R.id.slot2);
-        slot3 = findViewById(R.id.slot3);
-        slot4 = findViewById(R.id.slot4);
 
         Intent intent = getIntent();
         for (Device deviceItem : kangai.getDevices()) {
@@ -94,15 +92,11 @@ public class ViewPlants extends AppCompatActivity {
 
         Plants Slot1Plant = device.getPlantSlots().get(0);
         Plants Slot2Plant = device.getPlantSlots().get(1);
-        Plants Slot3Plant = device.getPlantSlots().get(2);
-        Plants Slot4Plant = device.getPlantSlots().get(3);
         setUpSlot(Slot1Plant, slot1, 1);
         setUpSlot(Slot2Plant, slot2, 2);
-        setUpSlot(Slot3Plant, slot3, 3);
-        setUpSlot(Slot4Plant, slot4, 4);
 
         long reservoirWaterLevel = device.getReservoir_water_level();
-        double percentage = (reservoirWaterLevel / 1023.0) * 100.0;
+        double percentage = (reservoirWaterLevel / 230.0) * 100.0;
         String formattedPercentage = String.format("%.0f%%", percentage);
         reservoir.setText(formattedPercentage);
 
@@ -124,12 +118,8 @@ public class ViewPlants extends AppCompatActivity {
 
                 Plants Slot1Plant = device.getPlantSlots().get(0);
                 Plants Slot2Plant = device.getPlantSlots().get(1);
-                Plants Slot3Plant = device.getPlantSlots().get(2);
-                Plants Slot4Plant = device.getPlantSlots().get(3);
                 updateSlotStatus(Slot1Plant, slot1);
                 updateSlotStatus(Slot2Plant, slot2);
-                updateSlotStatus(Slot3Plant, slot3);
-                updateSlotStatus(Slot4Plant, slot4);
                 handler.postDelayed(this, 1000);
             }
         };
@@ -158,18 +148,14 @@ public class ViewPlants extends AppCompatActivity {
         slot.findViewById(R.id.not_exists).setVisibility(View.GONE);
 
         HashMap<String, Object> slotData = new HashMap<>();
-        slotData.put("LastWatered", 0);
         slotData.put("Name", String.format("Slot %d", slotNum));
         slotData.put("Status", "DRY");
-        slotData.put("Value", 0);
         fd.addValues(String.format("Devices/%s/Plants/Slot%d", device.getId(), slotNum), slotData);
         fd.updateValue(String.format("Devices/%s/LastUpdate", device.getId()), System.currentTimeMillis());
 
         Plants plants = new Plants(slotNum,
                                     String.format("Slot %d", slotNum),
-                                    "DRY",
-                                    "0",
-                                    "0");
+                                    "DRY");
         setUpSlot(plants, slot, slotNum);
     }
 
@@ -207,14 +193,6 @@ public class ViewPlants extends AppCompatActivity {
         }
         TextView currentStatus = slot.findViewById(R.id.current_status);
         currentStatus.setText(String.format("Status: %s", toTitle(plant.getStatus())));
-
-        TextView lastWatered = slot.findViewById(R.id.last_watered_status);
-        if (!plant.getLastWatered().equals("0")) {
-            lastWatered.setVisibility(View.VISIBLE);
-            lastWatered.setText(String.format("Last Watered: %s", timestampTo12HourFormat(Long.valueOf(plant.getLastWatered()))));
-        } else {
-            lastWatered.setVisibility(View.GONE);
-        }
     }
 
     public void sendWaterCommand(Integer slotNum){

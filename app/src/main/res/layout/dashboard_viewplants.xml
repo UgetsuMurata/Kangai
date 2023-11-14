@@ -122,12 +122,6 @@
         <include
             android:id="@+id/slot2"
             layout="@layout/dashboard_viewplants_items"/>
-        <include
-            android:id="@+id/slot3"
-            layout="@layout/dashboard_viewplants_items"/>
-        <include
-            android:id="@+id/slot4"
-            layout="@layout/dashboard_viewplants_items"/>
     </LinearLayout>
 
 </LinearLayout>

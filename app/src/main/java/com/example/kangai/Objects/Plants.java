@@ -4,14 +4,12 @@ import android.util.Log;
 
 public class Plants {
     Integer slotNumber;
-    String name, status, value, lastWatered;
+    String name, status;
 
-    public Plants(Integer slotNumber, String name, String status, String value, String lastWatered) {
+    public Plants(Integer slotNumber, String name, String status) {
         this.slotNumber = slotNumber;
         this.name = name;
         this.status = status;
-        this.value = value;
-        this.lastWatered = lastWatered;
     }
 
     public Boolean exists(){
@@ -40,21 +38,5 @@ public class Plants {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getLastWatered() {
-        return lastWatered;
-    }
-
-    public void setLastWatered(String lastWatered) {
-        this.lastWatered = lastWatered;
     }
 }
