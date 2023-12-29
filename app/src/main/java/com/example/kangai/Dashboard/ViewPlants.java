@@ -117,7 +117,10 @@ public class ViewPlants extends AppCompatActivity {
                 if (device == null) finish();
 
                 long reservoirWaterLevel = device.getReservoir_water_level();
-                double percentage = (reservoirWaterLevel / 1023.0) * 100.0;
+                double percentage = (reservoirWaterLevel / 250.0) * 100.0;
+                if (percentage > 100) {
+                    percentage = 100;
+                }
                 String formattedPercentage = String.format("%.0f%%", percentage);
                 reservoir.setText(formattedPercentage);
 
