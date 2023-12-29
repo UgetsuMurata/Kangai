@@ -1,23 +1,21 @@
 package com.example.kangai.Dashboard;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.Menu;
 
-import com.example.kangai.Accounts.EditAccount;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.kangai.Application.Kangai;
 import com.example.kangai.Dashboard.Adapter.DevicesAdapter;
 import com.example.kangai.Dashboard.Adapter.LogsAdapter;
@@ -26,15 +24,11 @@ import com.example.kangai.Helpers.ToolbarMenu;
 import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.R;
-import com.example.kangai.Settings.Settings;
 import com.google.firebase.database.DataSnapshot;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -46,7 +40,7 @@ public class Dashboard extends AppCompatActivity {
     Integer ADD_DEVICE = 1;
     TextView username;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Runnable updateRecyclerviews;
 
     private enum deviceAmount{
@@ -61,7 +55,9 @@ public class Dashboard extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         home = findViewById(R.id.home);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
@@ -76,12 +72,7 @@ public class Dashboard extends AppCompatActivity {
         if (deviceList.size()==0) toggleDevices(deviceAmount.noDevice);
         else toggleDevices(deviceAmount.hasDevice);
         setUpUsername();
-        noDevices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE);
-            }
-        });
+        noDevices.setOnClickListener(view -> startActivityForResult(new Intent(Dashboard.this, AddDevice.class), ADD_DEVICE));
 
         updateRecyclerviews = new Runnable() {
             @Override
@@ -103,7 +94,12 @@ public class Dashboard extends AppCompatActivity {
         fd.retrieveData(this, String.format("ExistingUsernames/%s", kangai.getUserID()), new FirebaseData.FirebaseDataCallback() {
             @Override
             public void onDataReceived(DataSnapshot dataSnapshot) {
-                username.setText(dataSnapshot.getValue().toString());
+                Object username_value = dataSnapshot.getValue();
+                if (username_value != null) {
+                    username.setText(username_value.toString());
+                } else {
+                    username.setText(R.string.default_username);
+                }
             }
         });
     }

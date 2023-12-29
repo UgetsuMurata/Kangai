@@ -51,7 +51,7 @@ public class ViewPlants extends AppCompatActivity {
 
     FirebaseData fd;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Runnable runnable;
 
     @Override
@@ -62,7 +62,9 @@ public class ViewPlants extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         home = findViewById(R.id.home);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         home.setOnClickListener(view -> {
             startActivity(new Intent(ViewPlants.this, Dashboard.class));
             finish();
@@ -96,7 +98,10 @@ public class ViewPlants extends AppCompatActivity {
         setUpSlot(Slot2Plant, slot2, 2);
 
         long reservoirWaterLevel = device.getReservoir_water_level();
-        double percentage = (reservoirWaterLevel / 230.0) * 100.0;
+        double percentage = (reservoirWaterLevel / 250.0) * 100.0;
+        if (percentage > 100) {
+            percentage = 100;
+        }
         String formattedPercentage = String.format("%.0f%%", percentage);
         reservoir.setText(formattedPercentage);
 
