@@ -116,9 +116,11 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
         <include
             android:id="@+id/slot1"
-            layout="@layout/dashboard_viewplants_items"/>
+            layout="@layout/dashboard_viewplants_items" />
+
         <include
             android:id="@+id/slot2"
             layout="@layout/dashboard_viewplants_items"/>

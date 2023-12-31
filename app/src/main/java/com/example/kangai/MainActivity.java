@@ -136,16 +136,25 @@ public class MainActivity extends AppCompatActivity {
                             DataSnapshot Slot1 = dataSnapshot.child("Plants/Slot1");
                             Plants plant1 = new Plants(null, null, null);
                             if (Slot1.getValue() != null) {
-                                plant1 = new Plants(1,
-                                        Slot1.child("Name").getValue().toString(),
-                                        Slot1.child("Status").getValue().toString());
+                                try {
+                                    plant1 = new Plants(1,
+                                            Slot1.child("Name").getValue().toString(),
+                                            Slot1.child("Status").getValue().toString());
+                                } catch (NullPointerException ignore) {
+                                    fd.removeData(String.format("Devices/%s/Plants/Slot1", key));
+                                }
                             }
                             DataSnapshot Slot2 = dataSnapshot.child("Plants/Slot2");
                             Plants plant2 = new Plants(null, null, null);
                             if (Slot2.getValue() != null) {
-                                plant2 = new Plants(2,
-                                        Slot2.child("Name").getValue().toString(),
-                                        Slot2.child("Status").getValue().toString());
+                                try {
+                                    plant2 = new Plants(2,
+                                            Slot2.child("Name").getValue().toString(),
+                                            Slot2.child("Status").getValue().toString());
+                                } catch (NullPointerException ignore){
+                                    fd.removeData(String.format("Devices/%s/Plants/Slot2", key));
+                                }
+
                             }
                             Plants finalPlant1 = plant1;
                             Plants finalPlant2 = plant2;
