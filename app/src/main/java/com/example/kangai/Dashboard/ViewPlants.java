@@ -32,6 +32,7 @@ import com.example.kangai.Objects.Device;
 import com.example.kangai.Objects.Logs;
 import com.example.kangai.Objects.Plants;
 import com.example.kangai.R;
+import com.google.firebase.database.DataSnapshot;
 
 import org.w3c.dom.Text;
 
@@ -45,9 +46,10 @@ public class ViewPlants extends AppCompatActivity {
 
     LinearLayout home;
 
-    CardView slot1, slot2;
+    CardView slot1, slot2, emergencyStop;
     TextView deviceName, reservoir;
     Boolean hasChanges = false;
+    Boolean showEmergencyStop = false;
 
     FirebaseData fd;
 
@@ -80,6 +82,9 @@ public class ViewPlants extends AppCompatActivity {
         reservoir = findViewById(R.id.reservoir);
         slot1 = findViewById(R.id.slot1);
         slot2 = findViewById(R.id.slot2);
+        emergencyStop = findViewById(R.id.emergency_stop);
+
+        emergencyStop.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         for (Device deviceItem : kangai.getDevices()) {
@@ -108,6 +113,7 @@ public class ViewPlants extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
+                checkForAppCommand();
                 for (Device deviceItem : kangai.getDevices()) {
                     if (deviceItem.getId().equals(intent.getStringExtra("ID"))){
                         device = deviceItem;
@@ -132,7 +138,28 @@ public class ViewPlants extends AppCompatActivity {
             }
         };
         handler.post(runnable);
+        emergencyStop.setOnClickListener(view -> emergencyStopProcess());
     }
+
+    public void checkForAppCommand(){
+        fd.retrieveData(this, String.format("Devices/%s/AppCommand", device.getId()), new FirebaseData.FirebaseDataCallback() {
+            @Override
+            public void onDataReceived(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    showEmergencyStop = !"NULL".equals(dataSnapshot.getValue().toString());
+                    emergencyStop.setVisibility(showEmergencyStop?View.VISIBLE:View.GONE);
+                }
+            }
+        });
+    }
+
+    public void emergencyStopProcess(){
+        fd.updateValue(String.format("Devices/%s/AppCommand", device.getId()),
+                String.format("NULL"));
+        Toast.makeText(this, "You can now manually reposition the water hose.",
+                Toast.LENGTH_SHORT).show();
+    }
+
 
     public void setUpSlot(Plants plant, CardView slot, Integer slotNum){
         if (!plant.exists()){

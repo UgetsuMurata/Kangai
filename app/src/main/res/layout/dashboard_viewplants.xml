@@ -124,6 +124,24 @@
         <include
             android:id="@+id/slot2"
             layout="@layout/dashboard_viewplants_items"/>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/emergency_stop"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="#F99">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emergency Stop"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="7dp"
+                android:gravity="center"
+                android:fontFamily="@font/raleway_medium"
+                />
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
 </LinearLayout>
